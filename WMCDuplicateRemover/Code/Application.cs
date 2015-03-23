@@ -86,19 +86,20 @@ namespace WMCDuplicateRemover
             {
                 try
                 {
-                    var scheduledEvents = GetEventsScheduledToRecord();
-                    List<ScheduleEvent> scheduledEventsList = scheduledEvents as List<ScheduleEvent>;
+                    var eventScheduler = new EventScheduleWrapper();
+                    var scheduledEvents = eventScheduler.GetEventsScheduledToRecord();
+                    scheduledEvents.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
                     List<String> scheduledEventNames = new List<String>();
-                    foreach (var scheduledEvent in scheduledEventsList)
+                    foreach (var scheduledEvent in scheduledEvents)
                     {
                         try
                         {
                             scheduledEventNames.Add(
-                                String.Format("StartTime: {3}\nTitle:{0}\nOriginal Air:{1}\nDescription {2}\nStart Time: {3}\nState: {4}", 
-                                scheduledEvent.GetExtendedProperty(ScheduledEventProperties.Title).ToString(), 
-                                scheduledEvent.GetExtendedProperty(ScheduledEventProperties.OriginalAirDate).ToString(), 
-                                scheduledEvent.GetExtendedProperty(ScheduledEventProperties.Description).ToString(),
+                                String.Format("StartTime:{0}\nTitle:{1}\nOriginal Air:{2}\nDescription {3}\nState:{4}", 
                                 scheduledEvent.StartTime.ToString(),
+                                scheduledEvent.Title, 
+                                scheduledEvent.OriginalAirDate.ToShortDateString(), 
+                                scheduledEvent.Description,
                                 scheduledEvent.State.ToString()));
                         }
                         catch
@@ -115,12 +116,6 @@ namespace WMCDuplicateRemover
                     return new List<String> { "Alpha", "Bravo", "Charlie", "Delta" };
                 }
             }         
-        }
-
-        public ICollection<ScheduleEvent> GetEventsScheduledToRecord()
-        {
-            EventSchedule eventScheduler = new EventSchedule();
-            return eventScheduler.GetScheduleEvents(DateTime.Now, DateTime.Now.AddDays(30), ScheduleEventStates.WillOccur);
         }
     }
 }

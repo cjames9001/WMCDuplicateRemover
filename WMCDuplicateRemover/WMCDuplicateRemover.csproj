@@ -67,7 +67,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\Application.cs" />
+    <Compile Include="Code\EventScheduleWrapper.cs" />
+    <Compile Include="Code\IEventSchedule.cs" />
+    <Compile Include="Code\IScheduledEvent.cs" />
     <Compile Include="Code\Launch.cs" />
+    <Compile Include="Code\ScheduledEventWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
