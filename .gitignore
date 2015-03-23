@@ -1,0 +1,7 @@
+WMCDuplicateRemover/[Oo]bj/
+WMCDuplicateRemover/[Bb]in/
+*.suo
+*.user
+/TestResults
+*.vspscc
+*.vssscc
