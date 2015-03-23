@@ -6,7 +6,6 @@ using System.Diagnostics;
 using Microsoft.MediaCenter; 
 using Microsoft.MediaCenter.Hosting; 
 using Microsoft.MediaCenter.UI;
-using Microsoft.MediaCenter.TV.Scheduling;
 
 namespace WMCDuplicateRemover
 {

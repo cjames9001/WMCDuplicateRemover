@@ -15,10 +15,10 @@ namespace WMCDuplicateRemover
         {
             EventSchedule eventScheduler = new EventSchedule();
             _scheduledEvents = eventScheduler.GetScheduleEvents(DateTime.Now, DateTime.Now.AddDays(30), ScheduleEventStates.WillOccur);
-            return ConvertMicrosoftScheduleEventsToWrapperType();
+            return ConvertEventsToWrapperType();
         }
 
-        private List<IScheduledEvent> ConvertMicrosoftScheduleEventsToWrapperType()
+        private List<IScheduledEvent> ConvertEventsToWrapperType()
         {
             List<IScheduledEvent> wrapperTypedScheduledEvents = new List<IScheduledEvent>();
             foreach(var evnt in _scheduledEvents)

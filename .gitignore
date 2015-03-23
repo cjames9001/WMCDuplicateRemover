@@ -1,5 +1,7 @@
 WMCDuplicateRemover/[Oo]bj/
 WMCDuplicateRemover/[Bb]in/
+WMCDuplicateRemover.Tests/[Oo]bj/
+WMCDuplicateRemover.Tests/[Bb]in/
 *.suo
 *.user
 /TestResults

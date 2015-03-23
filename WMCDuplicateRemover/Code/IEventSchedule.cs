@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WMCDuplicateRemover
 {
-    interface IEventSchedule
+    public interface IEventSchedule
     {
         List<IScheduledEvent> GetEventsScheduledToRecord();
     }
