@@ -91,28 +91,21 @@ namespace WMCDuplicateRemover
                     List<String> scheduledEventNames = new List<String>();
                     foreach (var scheduledEvent in scheduledEvents)
                     {
-                        try
-                        {
-                            scheduledEventNames.Add(
-                                String.Format("StartTime:{0}\nTitle:{1}\nOriginal Air:{2}\nDescription {3}\nState:{4}", 
-                                scheduledEvent.StartTime.ToString(),
-                                scheduledEvent.Title, 
-                                scheduledEvent.OriginalAirDate.ToShortDateString(), 
-                                scheduledEvent.Description,
-                                scheduledEvent.State.ToString()));
-                        }
-                        catch
-                        {
-                            //Just trying not to blow up
-                        }
+                        scheduledEventNames.Add(
+                            String.Format("StartTime:{0}\nTitle:{1}\nOriginal Air:{2}\nDescription {3}\nState:{4}", 
+                            scheduledEvent.StartTime.ToString(),
+                            scheduledEvent.Title, 
+                            scheduledEvent.OriginalAirDate.ToShortDateString(), 
+                            scheduledEvent.Description,
+                            scheduledEvent.State.ToString()));
                     }
 
-                    scheduledEventNames.Sort();
                     return scheduledEventNames;
                 }
-                catch
+                catch(Exception ex)
                 {
-                    return new List<String> { "Alpha", "Bravo", "Charlie", "Delta" };
+                    MediaCenterEnvironment.Dialog(String.Format("There was an error processing:\n{0}", ex.Message), Resources.DialogCaption, new object[] { DialogButtons.Ok }, 0, true, null, delegate(DialogResult dialogResult) { });
+                    return new List<String>();
                 }
             }         
         }
