@@ -16,11 +16,14 @@ namespace WMCDuplicateRemover
             _scheduledEvent = scheduledEvent;
         }
 
+        private String title;
         public String Title
         { 
             get 
-            { 
-                return _scheduledEvent.GetExtendedProperty("Title").ToString(); 
+            {
+                if(title == null || title == string.Empty)
+                    title = _scheduledEvent.GetExtendedProperty("Title").ToString();
+                return title;
             } 
         }
 
@@ -40,11 +43,14 @@ namespace WMCDuplicateRemover
             }
         }
 
+        private string description;
         public String Description
         {
             get
             {
-                return _scheduledEvent.GetExtendedProperty("Description").ToString();
+                if(description == null || description == string.Empty)
+                    description = _scheduledEvent.GetExtendedProperty("Description").ToString();
+                return description;
             }
         }
 
