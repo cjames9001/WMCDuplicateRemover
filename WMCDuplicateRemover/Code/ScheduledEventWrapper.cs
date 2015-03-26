@@ -90,7 +90,7 @@ namespace WMCDuplicateRemover
         {
             get
             {
-                return Convert.ToDateTime(_scheduledEvent.GetExtendedProperty("OriginalAirDate"));
+                return Convert.ToDateTime(_scheduledEvent.GetExtendedProperty("OriginalAirDate")).ToLocalTime();
             }
         }
 
@@ -122,7 +122,7 @@ namespace WMCDuplicateRemover
         {
             get
             {
-                return _scheduledEvent.StartTime;
+                return _scheduledEvent.StartTime.ToLocalTime();
             }
         }
 
@@ -130,7 +130,7 @@ namespace WMCDuplicateRemover
         {
             get
             {
-                return _scheduledEvent.EndTime;
+                return _scheduledEvent.EndTime.ToLocalTime();
             }
         }
 
