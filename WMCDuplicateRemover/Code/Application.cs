@@ -92,12 +92,14 @@ namespace WMCDuplicateRemover
                     foreach (var scheduledEvent in scheduledEvents)
                     {
                         scheduledEventNames.Add(
-                            String.Format("StartTime:{0} Title:{1}\nOriginal Air:{2}\nDescription {3}\nState:{4}", 
+                            String.Format("StartTime:{0} Title:{1}\nOriginal Air:{2}\nDescription:{3}\nState:{4}\nPartial:{5}\nIsRepeat{6}", 
                             scheduledEvent.StartTime.ToString(),
                             scheduledEvent.Title, 
                             scheduledEvent.OriginalAirDate.ToShortDateString(), 
                             scheduledEvent.Description,
-                            scheduledEvent.State.ToString()));
+                            scheduledEvent.State.ToString(),
+                            scheduledEvent.Partial.ToString(),
+                            scheduledEvent.Repeat.ToString()));
                     }
 
                     return scheduledEventNames;
