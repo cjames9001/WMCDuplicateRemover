@@ -29,6 +29,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>WMCDuplicateRemoverKey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ehRecObj">
       <HintPath>..\WMCDuplicateRemover\MicrosoftLibraries\ehRecObj.dll</HintPath>
@@ -44,14 +50,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildGetEpisodeByAirDateUrlTests.cs" />
     <Compile Include="EventScheduleTests.cs" />
+    <Compile Include="TestMetaDataWrapper.cs" />
+    <Compile Include="MetaDataWrapperTests.cs" />
     <Compile Include="MockEventSchedule.cs" />
     <Compile Include="MockScheduledEvent.cs" />
     <Compile Include="ScheduledEventTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BuildGetSeriesUrlTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="WMCDuplicateRemoverKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WMCDuplicateRemover\WMCDuplicateRemover.csproj">

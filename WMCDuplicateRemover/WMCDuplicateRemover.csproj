@@ -52,6 +52,9 @@
     <StartAction>Program</StartAction>
     <StartProgram>$(windir)\eHome\McmlPad.exe</StartProgram>
   </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
@@ -72,6 +75,8 @@
     <Compile Include="Code\IScheduledEvent.cs" />
     <Compile Include="Code\Launch.cs" />
     <Compile Include="Code\ScheduledEventWrapper.cs" />
+    <Compile Include="Code\Wrappers\TheTVDBWrapper.cs" />
+    <Compile Include="Code\Wrappers\MetaDataWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>

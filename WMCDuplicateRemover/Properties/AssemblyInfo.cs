@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: InternalsVisibleTo("WMCDuplicateRemover.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100cb038365947a56f9c15cc8252af229d0fd34d5620ef978d3f8038d8626beb3eea9eb9362733e63510c5fd6d94f1ebe8023440be51adb092432df6ef8ec3fd4ccf9bede2581826462516a5acfbf53c5eeda76c7ee431ea31dea50beeb72db72f292e62fcb2a1dbe2200412950b3d7d79a40e9a31b47a447b5a55a526ea03f6da4")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
