@@ -50,15 +50,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildGetEpisodeByAirDateUrlTests.cs" />
+    <Compile Include="MetaDataWrapper\BuildGetEpisodeByAirDateUrlTests.cs" />
     <Compile Include="EventScheduleTests.cs" />
+    <Compile Include="MetaDataWrapper\GetEpisodeTitleFromOriginalAirDateIntegrationTests.cs" />
+    <Compile Include="MetaDataWrapper\GetEpisodeTitleFromOriginalAirDateTests.cs" />
+    <Compile Include="MetaDataWrapper\MetaDataWrapperIntegrationTests.cs" />
+    <Compile Include="MetaDataWrapper\MockMetaDataWrapper.cs" />
     <Compile Include="TestMetaDataWrapper.cs" />
-    <Compile Include="MetaDataWrapperTests.cs" />
+    <Compile Include="MetaDataWrapper\MetaDataWrapperTests.cs" />
     <Compile Include="MockEventSchedule.cs" />
     <Compile Include="MockScheduledEvent.cs" />
     <Compile Include="ScheduledEventTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BuildGetSeriesUrlTests.cs" />
+    <Compile Include="MetaDataWrapper\BuildGetSeriesUrlTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
