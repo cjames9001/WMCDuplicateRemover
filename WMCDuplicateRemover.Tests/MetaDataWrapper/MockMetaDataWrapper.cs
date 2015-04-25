@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace WMCDuplicateRemover.Tests
 {
@@ -58,7 +56,7 @@ namespace WMCDuplicateRemover.Tests
             var fs = new FileStream(fileName, FileMode.Open);
             Series series = DeserializeSeriesXML(fs);
             fs.Close();
-            return series.seriesid;
+            return series.SeriesID;
         }
     }
 }

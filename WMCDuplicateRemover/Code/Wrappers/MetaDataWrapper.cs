@@ -87,17 +87,34 @@ namespace WMCDuplicateRemover
         public class Series
         {
             [XmlElement("seriesid")]
-            public String seriesid { get; set; }
+            public String SeriesID { get; set; }
+
+            [XmlElement("language")]
             public String language { get; set; }
+
+            [XmlElement("SeriesName")]
             public String SeriesName { get; set; }
 
+            [XmlElement("banner")]
             public String banner { get; set; }
+
+            [XmlElement("Overview")]
             public String Overview { get; set; }
+
+            [XmlElement("FirstAired")]
             public DateTime FirstAired { get; set; }
+
+            [XmlElement("Network")]
             public String Network { get; set; }
-            public String IMDB_ID { get; set; }
-            public String zap2it_id { get; set; }
-            public String id { get; set; }
+
+            [XmlElement("IMDB_ID")]
+            public String IMDBID { get; set; }
+
+            [XmlElement("zap2it_id")]
+            public String Zap2ItID { get; set; }
+
+            [XmlElement("id")]
+            public String ID { get; set; }
         }
 
         protected Series DeserializeSeriesXML(Stream xmlStream)

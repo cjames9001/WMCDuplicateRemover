@@ -5,9 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Xml.XPath;
 
 namespace WMCDuplicateRemover
 {
@@ -27,7 +24,7 @@ namespace WMCDuplicateRemover
             HttpWebRequest request = WebRequest.Create(BuildSeriesURL()) as HttpWebRequest;
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
 
-            SeriesID = DeserializeSeriesXML(response.GetResponseStream()).seriesid;
+            SeriesID = DeserializeSeriesXML(response.GetResponseStream()).SeriesID;
         }
 
         protected override string RequestTitleFromAPI()
