@@ -44,9 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventScheduleTests.cs" />
     <Compile Include="MockEventSchedule.cs" />
     <Compile Include="MockScheduledEvent.cs" />
-    <Compile Include="WMCDuplicateRemoverTests.cs" />
+    <Compile Include="ScheduledEventTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
