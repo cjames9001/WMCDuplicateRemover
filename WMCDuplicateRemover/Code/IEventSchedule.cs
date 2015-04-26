@@ -7,6 +7,6 @@ namespace WMCDuplicateRemover
 {
     public interface IEventSchedule
     {
-        List<IScheduledEvent> GetEventsScheduledToRecord();
+        List<ScheduledEvent> GetEventsScheduledToRecord();
     }
 }

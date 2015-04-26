@@ -18,7 +18,7 @@ namespace WMCDuplicateRemover.Tests
         public void SetUp()
         {
             _eventSchedule = new MockEventSchedule(
-                new List<IScheduledEvent>
+                new List<ScheduledEvent>
                 {
                     new MockScheduledEvent(
                         "The Daily Show", 

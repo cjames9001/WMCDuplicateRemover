@@ -11,16 +11,16 @@ namespace WMCDuplicateRemover
     {
         private ICollection<ScheduleEvent> _scheduledEvents;
 
-        public List<IScheduledEvent> GetEventsScheduledToRecord()
+        public List<ScheduledEvent> GetEventsScheduledToRecord()
         {
             EventSchedule eventScheduler = new EventSchedule();
             _scheduledEvents = eventScheduler.GetScheduleEvents(DateTime.Now, DateTime.Now.AddDays(30), ScheduleEventStates.WillOccur);
             return ConvertEventsToWrapperType();
         }
 
-        private List<IScheduledEvent> ConvertEventsToWrapperType()
+        private List<ScheduledEvent> ConvertEventsToWrapperType()
         {
-            List<IScheduledEvent> wrapperTypedScheduledEvents = new List<IScheduledEvent>();
+            List<ScheduledEvent> wrapperTypedScheduledEvents = new List<ScheduledEvent>();
             foreach(var evnt in _scheduledEvents)
             {
                 wrapperTypedScheduledEvents.Add(new ScheduledEventWrapper(evnt));

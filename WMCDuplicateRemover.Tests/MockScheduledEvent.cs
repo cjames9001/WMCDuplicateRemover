@@ -8,7 +8,7 @@ using Microsoft.MediaCenter.TV.Scheduling;
 
 namespace WMCDuplicateRemover.Tests
 {
-    public class MockScheduledEvent : IScheduledEvent
+    public class MockScheduledEvent : ScheduledEvent
     {
         public MockScheduledEvent()
         {
@@ -41,107 +41,103 @@ namespace WMCDuplicateRemover.Tests
         }
 
         private string _title;
-        public string Title
+        public override string Title
         {
             get { return _title; }
         }
 
         private string _serviceId;
-        public string ServiceID
+        public override string ServiceID
         {
             get { return _serviceId; }
         }
 
         private string _channelId;
-        public string ChannelID
+        public override string ChannelID
         {
             get { return _channelId; }
         }
 
         private string _description;
-        public string Description
+        public override string Description
         {
             get { return _description; }
         }
 
         private int _keepUntil;
-        public int KeepUntil
+        public override int KeepUntil
         {
             get { return _keepUntil; }
         }
 
         private int _quality;
-        public int Quality
+        public override int Quality
         {
             get { return _quality; }
         }
 
         private bool _partial;
-        public bool Partial
+        public override bool Partial
         {
             get { return _partial; }
         }
 
         private string _providerCopyright;
-        public string ProviderCopyright
+        public override string ProviderCopyright
         {
             get { return _providerCopyright; }
         }
 
         private DateTime _originalAirDate;
-        public DateTime OriginalAirDate
+        public override DateTime OriginalAirDate
         {
             get { return _originalAirDate; }
         }
 
         private bool _repeat;
-        public bool Repeat
+        public override bool Repeat
         {
             get { return _repeat; }
         }
 
         private string _genre;
-        public string Genre
+        public override string Genre
         {
             get { return _genre; }
         }
 
         private string _fileName;
-        public string FileName
+        public override string FileName
         {
             get { return _fileName; }
         }
 
         private DateTime _startTime;
-        public DateTime StartTime
+        public override DateTime StartTime
         {
             get { return _startTime; }
         }
 
         private DateTime _endTime;
-        public DateTime EndTime
+        public override DateTime EndTime
         {
             get { return _endTime; }
         }
 
         private ScheduleEventStates _state;
-        public ScheduleEventStates State
+        public override ScheduleEventStates State
         {
             get { return _state; }
         }
 
-        public void CancelEvent()
+        public override void CancelEvent()
         {
             //Event Gets Cancelled
         }
 
-        public bool CanEventBeCancelled()
+        protected override bool EventLogInformationAllowsForCancellation(EntryWrapper entryWrapper, MetaDataWrapper metaDataWrapper)
         {
-            if (OriginalAirDate.Date == DateTime.MinValue.Date)
-                return false;
-            if (Repeat && OriginalAirDate < DateTime.Now)
-                return true;
-            return false;
+            return entryWrapper.FoundEventForRecording(metaDataWrapper.SeriesName, metaDataWrapper.GetEpisodeTitleFromOriginalAirDate());
         }
     }
 }

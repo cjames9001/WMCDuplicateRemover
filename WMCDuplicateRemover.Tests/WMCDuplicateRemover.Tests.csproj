@@ -56,6 +56,8 @@
     <Compile Include="MetaDataWrapper\GetEpisodeTitleFromOriginalAirDateTests.cs" />
     <Compile Include="MetaDataWrapper\MetaDataWrapperIntegrationTests.cs" />
     <Compile Include="MetaDataWrapper\MockMetaDataWrapper.cs" />
+    <Compile Include="MockEventLogEntryWrapper.cs" />
+    <Compile Include="SetupHelper.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="MetaDataWrapper\MetaDataWrapperTests.cs" />
     <Compile Include="MockEventSchedule.cs" />

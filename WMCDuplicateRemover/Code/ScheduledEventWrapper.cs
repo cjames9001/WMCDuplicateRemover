@@ -7,7 +7,7 @@ using Microsoft.MediaCenter.TV.Scheduling;
 
 namespace WMCDuplicateRemover
 {
-    public class ScheduledEventWrapper : IScheduledEvent
+    public class ScheduledEventWrapper : ScheduledEvent
     {
         private ScheduleEvent _scheduledEvent;
 
@@ -17,7 +17,7 @@ namespace WMCDuplicateRemover
         }
 
         private String title;
-        public String Title
+        public override String Title
         { 
             get 
             {
@@ -27,7 +27,7 @@ namespace WMCDuplicateRemover
             } 
         }
 
-        public String ServiceID
+        public override String ServiceID
         {
             get
             {
@@ -35,7 +35,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public String ChannelID
+        public override String ChannelID
         {
             get
             {
@@ -44,7 +44,7 @@ namespace WMCDuplicateRemover
         }
 
         private string description;
-        public String Description
+        public override String Description
         {
             get
             {
@@ -54,7 +54,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public int KeepUntil
+        public override int KeepUntil
         {
             get
             {
@@ -62,7 +62,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public int Quality
+        public override int Quality
         {
             get
             {
@@ -70,7 +70,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public bool Partial
+        public override bool Partial
         {
             get
             {
@@ -78,7 +78,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public String ProviderCopyright
+        public override String ProviderCopyright
         {
             get
             {
@@ -86,7 +86,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public DateTime OriginalAirDate
+        public override DateTime OriginalAirDate
         {
             get
             {
@@ -94,7 +94,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public bool Repeat
+        public override bool Repeat
         {
             get
             {
@@ -102,7 +102,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public String Genre
+        public override String Genre
         {
             get
             {
@@ -110,7 +110,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public String FileName
+        public override String FileName
         {
             get
             {
@@ -118,7 +118,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public DateTime StartTime
+        public override DateTime StartTime
         {
             get
             {
@@ -126,7 +126,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public DateTime EndTime
+        public override DateTime EndTime
         {
             get
             {
@@ -134,7 +134,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public ScheduleEventStates State
+        public override ScheduleEventStates State
         {
             get
             {
@@ -142,14 +142,14 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public void CancelEvent()
+        public override void CancelEvent()
         {
             _scheduledEvent.Cancel();
         }
 
-        public bool CanEventBeCancelled()
+        protected override bool EventLogInformationAllowsForCancellation(EntryWrapper entryWrapper, MetaDataWrapper metaDataWrapper)
         {
-            return false;
+            return true;
         }
     }
 }

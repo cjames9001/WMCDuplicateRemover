@@ -11,7 +11,19 @@ namespace WMCDuplicateRemover.Tests
     [TestFixture]
     public class ScheduledEventTests
     {
-        IScheduledEvent _scheduledEvent;
+        ScheduledEvent _scheduledEvent;
+
+        [TestFixtureSetUp]
+        public void SetupFixture()
+        {
+            SetupHelper.SetupXMLData();
+        }
+
+        [TestFixtureTearDown]
+        public void TearDownFixture()
+        {
+            SetupHelper.TearDownXMLData();
+        }
 
         [SetUp]
         public void SetUp()
@@ -24,8 +36,6 @@ namespace WMCDuplicateRemover.Tests
                 false, 
                 new DateTime(2015, 4, 19, 7, 0, 0), 
                 Microsoft.MediaCenter.TV.Scheduling.ScheduleEventStates.WillOccur);
-
-            
         }
 
         [Test]
@@ -41,9 +51,14 @@ namespace WMCDuplicateRemover.Tests
         }
 
         [TestCaseSource(typeof(ScheduledEventCancellationTests))]
-        public bool TestCanCancelScheduledEvent(IScheduledEvent scheduledEvent)
+        public bool TestCanCancelScheduledEvent(ScheduledEvent scheduledEvent)
         {
-            return scheduledEvent.CanEventBeCancelled();
+            var metaDataWrapper = new MockMetaDataWrapper(scheduledEvent.Title, scheduledEvent.OriginalAirDate);
+            //TODO: Don't be lazy and put this here, it really muddies the intent...
+            metaDataWrapper.seriesIdCache = new Dictionary<string, string>() { { "the simpsons", "71663" }, { "forensic files", "71415" }, { "last week tonight", "278518" }, { "blahblahblah", "4568" } };
+            var eventLogEntryWrapper = new MockEventLogEntryWrapper();
+
+            return scheduledEvent.CanEventBeCancelled(eventLogEntryWrapper, metaDataWrapper);
         }
 
     }

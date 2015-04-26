@@ -70,6 +70,30 @@ namespace WMCDuplicateRemover.Tests
                 .Returns(false)
                 .SetDescription("Check that original air date is min value does not cancel recording")
                 .SetName("TestCannotCancelOriginalAirDateAsMinValueNotMarkedAsRepeat");
+
+            yield return new TestCaseData(new MockScheduledEvent(
+                "The Simpsons",
+                "A yellow family grows up in Springfield.",
+                false,
+                DateTime.Now.Date,
+                true,
+                DateTime.Now.Date,
+                Microsoft.MediaCenter.TV.Scheduling.ScheduleEventStates.WillOccur))
+                .Returns(false)
+                .SetDescription("Check that original air date is today and marked as repeat will not cancel")
+                .SetName("TestCannotCancelOriginalAirDateAsTodayAndMarkedRepeat");
+
+            yield return new TestCaseData(new MockScheduledEvent(
+                "The Simpsons",
+                "A yellow family grows up in Springfield.",
+                false,
+                DateTime.Now.Date,
+                false,
+                DateTime.Now.Date,
+                Microsoft.MediaCenter.TV.Scheduling.ScheduleEventStates.WillOccur))
+                .Returns(false)
+                .SetDescription("Check that original air date is today and not marked as repeat will not cancel")
+                .SetName("TestCannotCancelOriginalAirDateAsTodayAndMarkedNotRepeat");
         }
     }
 }

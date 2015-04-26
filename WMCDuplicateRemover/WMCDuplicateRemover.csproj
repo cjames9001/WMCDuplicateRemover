@@ -72,9 +72,11 @@
     <Compile Include="Code\Application.cs" />
     <Compile Include="Code\EventScheduleWrapper.cs" />
     <Compile Include="Code\IEventSchedule.cs" />
-    <Compile Include="Code\IScheduledEvent.cs" />
+    <Compile Include="Code\ScheduledEvent.cs" />
     <Compile Include="Code\Launch.cs" />
     <Compile Include="Code\ScheduledEventWrapper.cs" />
+    <Compile Include="Code\Wrappers\EntryWrapper.cs" />
+    <Compile Include="Code\Wrappers\EventLogEntryWrapper.cs" />
     <Compile Include="Code\Wrappers\TheTVDBWrapper.cs" />
     <Compile Include="Code\Wrappers\MetaDataWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

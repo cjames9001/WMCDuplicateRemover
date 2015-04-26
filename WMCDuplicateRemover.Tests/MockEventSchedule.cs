@@ -9,13 +9,13 @@ namespace WMCDuplicateRemover.Tests
 {
     internal class MockEventSchedule : IEventSchedule
     {
-        private List<IScheduledEvent> _scheduledEvents;
-        public MockEventSchedule(List<IScheduledEvent> scheduledEvents)
+        private List<ScheduledEvent> _scheduledEvents;
+        public MockEventSchedule(List<ScheduledEvent> scheduledEvents)
         {
             _scheduledEvents = scheduledEvents;
         }
 
-        public List<IScheduledEvent> GetEventsScheduledToRecord()
+        public List<ScheduledEvent> GetEventsScheduledToRecord()
         {
             return _scheduledEvents;
         }
