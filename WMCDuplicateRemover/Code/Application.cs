@@ -125,7 +125,8 @@ namespace WMCDuplicateRemover
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "WMCDuplicateRemoverDryRun.log");
             if(!File.Exists(path))
             {
-                File.Create(path);
+                var myfile = File.Create(path);
+                myfile.Close();
                 File.WriteAllText(path, scheduledEventText + Environment.NewLine);
             }
             else
