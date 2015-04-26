@@ -30,7 +30,6 @@ namespace WMCDuplicateRemover
     {
         private AddInHost host;
         private HistoryOrientedPageSession session;
-        private readonly string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "WMCDuplicateRemoverDryRun.log");
 
         public Application()
             : this(null, null)
@@ -86,13 +85,14 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "WMCDuplicateRemoverDryRun.log");
                 try
                 {
                     var eventScheduler = new EventScheduleWrapper();
                     var scheduledEvents = eventScheduler.GetEventsScheduledToRecord();
                     scheduledEvents.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
                     List<String> duplicateScheduledEvents = new List<String>();
-                    ProcessDuplicates(scheduledEvents, duplicateScheduledEvents);
+                    ProcessDuplicates(scheduledEvents, duplicateScheduledEvents, logPath);
 
                     return duplicateScheduledEvents;
                 }
@@ -100,13 +100,13 @@ namespace WMCDuplicateRemover
                 {
                     MediaCenterEnvironment.Dialog(String.Format("There was an error processing:\n{0}", ex.Message), Resources.DialogCaption, new object[] { DialogButtons.Ok }, 0, true, null, delegate(DialogResult dialogResult) { });
                     String logText = String.Format("Error processing Exception Message: {1}{0}Inner Exception: {2}{0}Stack Trace: {3}{0}", Environment.NewLine, ex.Message, ex.InnerException.ToString(), ex.StackTrace);
-                    AppendTextToFile(logText);
+                    AppendTextToFile(logText, logPath);
                     return new List<String>();
                 }
             }         
         }
 
-        private void ProcessDuplicates(List<ScheduledEvent> scheduledEvents, List<String> duplicateScheduledEvents)
+        private void ProcessDuplicates(List<ScheduledEvent> scheduledEvents, List<String> duplicateScheduledEvents, String logPath)
         {
             foreach (var scheduledEvent in scheduledEvents)
             {
@@ -126,18 +126,18 @@ namespace WMCDuplicateRemover
 
                         duplicateScheduledEvents.Add(scheduledEventText);
 
-                        SendDuplicateInfoToFile(scheduledEvent.ToString());
+                        SendDuplicateInfoToFile(scheduledEvent.ToString(), logPath);
                     }
                 }
                 catch(Exception ex)
                 {
                     String logText = String.Format("Error processing {0}{1}Exception Message: {2}{1}Inner Exception: {3}{1}Stack Trace: {4}{1}", scheduledEvent.ToString(), Environment.NewLine, ex.Message, ex.InnerException.ToString(), ex.StackTrace);
-                    AppendTextToFile(logText);
+                    AppendTextToFile(logText, logPath);
                 }
             }
         }
 
-        private void AppendTextToFile(String logText)
+        private void AppendTextToFile(String logText, String logPath)
         {
             if (!File.Exists(logPath))
             {
@@ -151,10 +151,10 @@ namespace WMCDuplicateRemover
             }
         }
 
-        private void SendDuplicateInfoToFile(string scheduledEventText)
+        private void SendDuplicateInfoToFile(String scheduledEventText, String logPath)
         {
             String logText = String.Format("Cancelled: " + scheduledEventText);
-            AppendTextToFile(logText);
+            AppendTextToFile(logText, logPath);
         }
 
         private static string FormatLogText(string textToLog)
