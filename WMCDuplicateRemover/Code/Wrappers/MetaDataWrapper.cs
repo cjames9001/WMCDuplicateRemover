@@ -11,7 +11,7 @@ namespace WMCDuplicateRemover
 {
     public abstract class MetaDataWrapper
     {
-        //TODO: Put these in a config setting to make this configurable
+        //TODO: Look for these values maybe in the appdata folder since I don't think I can use an app.config to make this configurable
         private readonly string apiPrefix = "http://thetvdb.com/api/";
         private readonly string apiKey = "B568191E5807039C";
         internal Dictionary<String, String> seriesIdCache;

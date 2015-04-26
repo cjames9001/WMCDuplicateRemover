@@ -36,12 +36,12 @@ namespace WMCDuplicateRemover.Tests
             yield return new TestCaseData(CreateMetaDataWrapper("The Nightly Show with Larry Wilmore", new DateTime(2015, 4, 21)))
                 .Returns("Walmart Closures & A Cop's Non-Lethal Force")
                 .SetDescription("Check that series id and original air date has value")
-                .SetName("TestBuildThe Nightly Show with Larry WilmoreUrlFromApi");
+                .SetName("TestGetTheTitleForTheNightlyShowwithLarryWilmoreEpisode");
 
             yield return new TestCaseData(CreateMetaDataWrapper("King of The Hill", new DateTime(2001, 11, 11)))
                 .Returns("Bobby Goes Nuts")
                 .SetDescription("Check that series id and original air date has value")
-                .SetName("TestBuildThe Nightly Show with Larry WilmoreUrlFromApi");
+                .SetName("TestGetTitleForKingOfTheHillEpisode");
 
             yield return new TestCaseData(CreateMetaDataWrapper("BlahBlahBlah", new DateTime(2015, 7, 21)))
                 .Throws(typeof(NullReferenceException))

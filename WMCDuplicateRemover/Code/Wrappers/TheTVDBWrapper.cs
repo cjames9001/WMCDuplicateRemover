@@ -23,14 +23,22 @@ namespace WMCDuplicateRemover
         {
             HttpWebRequest request = WebRequest.Create(BuildSeriesURL()) as HttpWebRequest;
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-
+            
             SeriesID = DeserializeXMLStreamStartingAtNode<SeriesMetaData>(response.GetResponseStream(), "Series").SeriesID;
+
+            response.Close();
         }
 
         protected override string RequestTitleFromAPI()
         {
-            //TODO: Do Some logic to get this to work and get my info from the api
-            throw new NotImplementedException();
+            HttpWebRequest request = WebRequest.Create(BuildGetEpisodeByAirDateUrl()) as HttpWebRequest;
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+
+            var episodeName = DeserializeXMLStreamStartingAtNode<EpisodeMetaData>(response.GetResponseStream(), "Episode").EpisodeName;
+
+            response.Close();
+
+            return episodeName;
         }
     }
 }
