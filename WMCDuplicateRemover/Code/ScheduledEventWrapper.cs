@@ -18,6 +18,11 @@ namespace WMCDuplicateRemover
             _scheduledEvent = scheduledEvent;
         }
 
+        public ScheduledEventWrapper()
+        {
+            // TODO: Complete member initialization
+        }
+
         #endregion
 
         #region Properties
@@ -27,7 +32,7 @@ namespace WMCDuplicateRemover
         { 
             get 
             {
-                if(String.IsNullOrEmpty(_title))
+                if(String.IsNullOrEmpty(_title) && _scheduledEvent != null)
                     _title = _scheduledEvent.GetExtendedProperty("Title").ToString();
                 return _title;
             }
@@ -37,7 +42,9 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent != null)
                 return _scheduledEvent.GetExtendedProperty("ServiceID").ToString();
+                return String.Empty;
             }
         }
 
@@ -45,7 +52,9 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent != null)
                 return _scheduledEvent.GetExtendedProperty("ChannelID").ToString();
+                return String.Empty;
             }
         }
 
@@ -54,7 +63,7 @@ namespace WMCDuplicateRemover
         {
             get
             {
-                if(String.IsNullOrEmpty(_description))
+                if(String.IsNullOrEmpty(_description) && _scheduledEvent != null)
                     _description = _scheduledEvent.GetExtendedProperty("Description").ToString();
                 return _description;
             }
@@ -64,7 +73,9 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent != null)
                 return Convert.ToInt32(_scheduledEvent.GetExtendedProperty("KeepUntil"));
+                return 0;
             }
         }
 
@@ -72,7 +83,9 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent!= null)
                 return Convert.ToInt32(_scheduledEvent.GetExtendedProperty("Quality"));
+                return 0;
             }
         }
 
@@ -80,7 +93,10 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent!= null)
                 return Convert.ToBoolean(_scheduledEvent.GetExtendedProperty("Partial"));
+
+                return false;
             }
         }
 
@@ -88,7 +104,9 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent != null)
                 return _scheduledEvent.GetExtendedProperty("ProviderCopyright").ToString();
+                return String.Empty;
             }
         }
 
@@ -96,7 +114,9 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent != null)
                 return Convert.ToDateTime(_scheduledEvent.GetExtendedProperty("OriginalAirDate")).ToLocalTime();
+                return DateTime.MinValue;
             }
         }
 
@@ -104,7 +124,9 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent != null)
                 return Convert.ToBoolean(_scheduledEvent.GetExtendedProperty("Repeat"));
+                return false;
             }
         }
 
@@ -112,7 +134,9 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent!= null)
                 return _scheduledEvent.GetExtendedProperty("Genre").ToString();
+                return String.Empty;
             }
         }
 
@@ -120,7 +144,9 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent!= null)
                 return _scheduledEvent.GetExtendedProperty("FileName").ToString();
+                return String.Empty;
             }
         }
 
@@ -128,7 +154,9 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent != null)
                 return _scheduledEvent.StartTime.ToLocalTime();
+                return DateTime.MinValue;
             }
         }
 
@@ -136,7 +164,9 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent!= null)
                 return _scheduledEvent.EndTime.ToLocalTime();
+                return DateTime.MinValue;
             }
         }
 
@@ -144,7 +174,9 @@ namespace WMCDuplicateRemover
         {
             get
             {
+                if(_scheduledEvent!=null)
                 return _scheduledEvent.State;
+                return ScheduleEventStates.None;
             }
         }
 
@@ -163,22 +195,22 @@ namespace WMCDuplicateRemover
                 this.GetType().Namespace,
                 this.GetType().Name,
                 Environment.NewLine,
-                Title,
+                String.IsNullOrEmpty(Title) ? "" : Title,
                 EpisodeTitle,
-                Description,
-                ServiceID,
-                ChannelID,
-                KeepUntil,
-                Quality,
-                Partial,
-                ProviderCopyright,
-                OriginalAirDate,
-                Repeat,
-                Genre,
-                FileName,
-                StartTime,
-                EndTime,
-                State);
+                String.IsNullOrEmpty(Description) ? "" : Description,
+                String.IsNullOrEmpty(ServiceID) ? "" : ServiceID,
+                String.IsNullOrEmpty(ChannelID) ? "" : ChannelID,
+                KeepUntil == null ? "" : KeepUntil.ToString(),
+                Quality == null ? "" : Quality.ToString(),
+                Partial == null ? "" : Partial.ToString(),
+                String.IsNullOrEmpty(ProviderCopyright) ? "" : ProviderCopyright,
+                OriginalAirDate == null ? "" : OriginalAirDate.ToString(),
+                Repeat == null ? "" : Repeat.ToString(),
+                String.IsNullOrEmpty(Genre) ? "" : Genre,
+                String.IsNullOrEmpty(FileName) ? "" : FileName,
+                StartTime == null ? "" : StartTime.ToString(),
+                EndTime == null ? "" : EndTime.ToString(),
+                State == null ? "" : State.ToString());
         }
     }
 }

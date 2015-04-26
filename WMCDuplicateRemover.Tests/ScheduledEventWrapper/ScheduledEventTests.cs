@@ -50,6 +50,12 @@ namespace WMCDuplicateRemover.Tests
             Assert.AreEqual(ScheduleEventStates.WillOccur, _scheduledEvent.State);
         }
 
+        [Test]
+        public void TestScheduledEventToString()
+        {
+            Assert.AreNotEqual("", new ScheduledEventWrapper().ToString());
+        }
+
         [TestCaseSource(typeof(ScheduledEventCancellationTests))]
         public bool TestCanCancelScheduledEvent(ScheduledEvent scheduledEvent)
         {
