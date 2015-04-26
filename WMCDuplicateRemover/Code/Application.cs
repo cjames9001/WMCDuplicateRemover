@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 using System.Diagnostics; 
 using Microsoft.MediaCenter; 
@@ -94,15 +95,18 @@ namespace WMCDuplicateRemover
                         var metaData = new TheTVDBWrapper(scheduledEvent.Title, scheduledEvent.OriginalAirDate);
                         if (scheduledEvent.CanEventBeCancelled(new EventLogEntryWrapper(), metaData))
                         {
-                            duplicateScheduledEvents.Add(
-                                String.Format("StartTime:{0} Title:{1}\nOriginal Air:{2}\nDescription:{3}\nState:{4}\nPartial:{5}\nIsRepeat{6}",
+                            var scheduledEventText = String.Format("StartTime:{0} Title:{1}\nOriginal Air:{2}\nDescription:{3}\nState:{4}\nPartial:{5}\nIsRepeat{6}",
                                 scheduledEvent.StartTime.ToString(),
                                 scheduledEvent.Title,
                                 scheduledEvent.OriginalAirDate.ToShortDateString(),
                                 scheduledEvent.Description,
                                 scheduledEvent.State.ToString(),
                                 scheduledEvent.Partial.ToString(),
-                                scheduledEvent.Repeat.ToString()));
+                                scheduledEvent.Repeat.ToString());
+
+                            duplicateScheduledEvents.Add(scheduledEventText);
+
+                            WriteToTextFile(scheduledEventText);
                         }
                     }
 
@@ -114,6 +118,20 @@ namespace WMCDuplicateRemover
                     return new List<String>();
                 }
             }         
+        }
+
+        private void WriteToTextFile(string scheduledEventText)
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "WMCDuplicateRemoverDryRun.log");
+            if(!File.Exists(path))
+            {
+                File.Create(path);
+                File.WriteAllText(path, scheduledEventText + Environment.NewLine);
+            }
+            else
+            {
+                File.AppendAllText(path, scheduledEventText + Environment.NewLine);
+            }
         }
     }
 }
