@@ -134,10 +134,5 @@ namespace WMCDuplicateRemover.Tests
         {
             //Event Gets Cancelled
         }
-
-        protected override bool EventLogInformationAllowsForCancellation(EntryWrapper entryWrapper, MetaDataWrapper metaDataWrapper)
-        {
-            return entryWrapper.FoundEventForRecording(metaDataWrapper.SeriesName, metaDataWrapper.GetEpisodeTitleFromOriginalAirDate());
-        }
     }
 }

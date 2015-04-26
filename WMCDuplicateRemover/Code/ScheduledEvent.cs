@@ -25,10 +25,14 @@ namespace WMCDuplicateRemover
         public abstract DateTime EndTime { get; }
         public abstract ScheduleEventStates State { get; }
 
-        public abstract void CancelEvent();        
-        protected abstract bool EventLogInformationAllowsForCancellation(EntryWrapper entryWrapper, MetaDataWrapper metaDataWrapper);
+        public abstract void CancelEvent();
 
-        protected bool WMCMetaDataAllowsForCancellation()
+        internal bool EventLogInformationAllowsForCancellation(EntryWrapper entryWrapper, MetaDataWrapper metaDataWrapper)
+        {
+            return entryWrapper.FoundEventForRecording(metaDataWrapper.SeriesName, metaDataWrapper.GetEpisodeTitleFromOriginalAirDate());
+        }
+
+        internal bool WMCMetaDataAllowsForCancellation()
         {
             if (OriginalAirDate.Date == DateTime.MinValue.Date || OriginalAirDate.Date == DateTime.Now.Date)
                 return false;

@@ -12,7 +12,7 @@ namespace WMCDuplicateRemover.Tests
         protected virtual MetaDataWrapper CreateMetaDataWrapper(String seriesName, DateTime originalAirDate)
         {
             var metaDataWrapper = new MockMetaDataWrapper(seriesName, originalAirDate);
-            metaDataWrapper.seriesIdCache = new Dictionary<string, string>() { { "the simpsons", "71663" }, { "forensic files", "71415" }, { "last week tonight", "278518" }, { "blahblahblah", "4568" } };
+            metaDataWrapper.seriesIdCache = new Dictionary<string, string>() { { "the simpsons", "71663" }, { "forensic files", "71415" }, { "last week tonight", "278518" }, { "community", "94571" }, { "blahblahblah", "4568" } };
             return metaDataWrapper;
         }
 
@@ -47,6 +47,11 @@ namespace WMCDuplicateRemover.Tests
                 .Returns("Bobby Goes Nuts")
                 .SetDescription("Check that series id and original air date has value")
                 .SetName("TestGetTitleForKingOfTheHillEpisodeGetsSeriesInfoFromCache");
+
+            yield return new TestCaseData(CreateMetaDataWrapper("Community", new DateTime(2010, 10, 14)))
+                .Returns("Basic Rocket Science")
+                .SetDescription("Check that series id and original air date has value")
+                .SetName("TestGetTitleForCommunityEvenThoughCommunityHasTwoReturnSeriesResults");
 
             yield return new TestCaseData(CreateMetaDataWrapper("BlahBlahBlah", new DateTime(2015, 7, 21)))
                 .Throws(typeof(NullReferenceException))

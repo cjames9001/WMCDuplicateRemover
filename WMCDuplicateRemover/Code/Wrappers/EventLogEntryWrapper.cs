@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace WMCDuplicateRemover.Code.Wrappers
+namespace WMCDuplicateRemover
 {
     public class EventLogEntryWrapper : EntryWrapper
     {

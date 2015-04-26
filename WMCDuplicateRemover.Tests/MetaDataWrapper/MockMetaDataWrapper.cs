@@ -46,6 +46,8 @@ namespace WMCDuplicateRemover.Tests
                     return GetEpisodeMetaDataFromXML("TheDisappearanceofHelleCrafts.xml");
                 case "last week tonight":
                     return GetEpisodeMetaDataFromXML("Patents.xml");
+                case "community":
+                    return "Basic Rocket Science";
             }
 
             throw new NullReferenceException("The episode was not found, not much we can do... I suppose you could contribute to the open source database.....");

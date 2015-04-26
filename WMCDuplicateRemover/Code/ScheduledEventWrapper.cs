@@ -11,20 +11,26 @@ namespace WMCDuplicateRemover
     {
         private ScheduleEvent _scheduledEvent;
 
+        #region Constructors
+
         public ScheduledEventWrapper(ScheduleEvent scheduledEvent)
         {
             _scheduledEvent = scheduledEvent;
         }
 
-        private String title;
+        #endregion
+
+        #region Properties
+
+        private String _title;
         public override String Title
         { 
             get 
             {
-                if(title == null || title == string.Empty)
-                    title = _scheduledEvent.GetExtendedProperty("Title").ToString();
-                return title;
-            } 
+                if(String.IsNullOrEmpty(_title))
+                    _title = _scheduledEvent.GetExtendedProperty("Title").ToString();
+                return _title;
+            }
         }
 
         public override String ServiceID
@@ -43,14 +49,14 @@ namespace WMCDuplicateRemover
             }
         }
 
-        private string description;
+        private string _description;
         public override String Description
         {
             get
             {
-                if(description == null || description == string.Empty)
-                    description = _scheduledEvent.GetExtendedProperty("Description").ToString();
-                return description;
+                if(String.IsNullOrEmpty(_description))
+                    _description = _scheduledEvent.GetExtendedProperty("Description").ToString();
+                return _description;
             }
         }
 
@@ -142,14 +148,11 @@ namespace WMCDuplicateRemover
             }
         }
 
+        #endregion
+
         public override void CancelEvent()
         {
             _scheduledEvent.Cancel();
-        }
-
-        protected override bool EventLogInformationAllowsForCancellation(EntryWrapper entryWrapper, MetaDataWrapper metaDataWrapper)
-        {
-            return true;
         }
     }
 }

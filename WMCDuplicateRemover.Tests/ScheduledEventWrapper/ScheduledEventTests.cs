@@ -56,10 +56,8 @@ namespace WMCDuplicateRemover.Tests
             var metaDataWrapper = new MockMetaDataWrapper(scheduledEvent.Title, scheduledEvent.OriginalAirDate);
             //TODO: Don't be lazy and put this here, it really muddies the intent...
             metaDataWrapper.seriesIdCache = new Dictionary<string, string>() { { "the simpsons", "71663" }, { "forensic files", "71415" }, { "last week tonight", "278518" }, { "blahblahblah", "4568" } };
-            var eventLogEntryWrapper = new MockEventLogEntryWrapper();
 
-            return scheduledEvent.CanEventBeCancelled(eventLogEntryWrapper, metaDataWrapper);
+            return scheduledEvent.CanEventBeCancelled(new MockEventLogEntryWrapper(), metaDataWrapper);
         }
-
     }
 }
