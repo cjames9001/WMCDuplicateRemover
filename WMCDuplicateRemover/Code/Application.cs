@@ -117,9 +117,13 @@ namespace WMCDuplicateRemover
             {
                 try
                 {
+                    AppendTextToFile("pre meta", logPath);
+
                     var metaData = new TheTVDBWrapper(scheduledEvent.Title, scheduledEvent.OriginalAirDate);
+                    AppendTextToFile("postmeta", logPath);
                     if (scheduledEvent.CanEventBeCancelled(new EventLogEntryWrapper(), metaData))
                     {
+                        AppendTextToFile("in event can be cancelled", logPath);
                         var scheduledEventText = String.Format("StartTime:{0} Title:{1}\nOriginal Air:{2}\nDescription:{3}\nState:{4}\nPartial:{5}\nIsRepeat{6}",
                             scheduledEvent.StartTime.ToString(),
                             scheduledEvent.Title,
