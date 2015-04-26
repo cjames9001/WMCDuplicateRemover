@@ -33,7 +33,7 @@ namespace WMCDuplicateRemover
 
         private void UpdateCache()
         {
-            if (!String.IsNullOrEmpty(SeriesID))
+            if (!String.IsNullOrEmpty(SeriesID) && !seriesIdCache.ContainsKey(SeriesName))
                 seriesIdCache.Add(SeriesName, SeriesID);
         }
 
@@ -46,6 +46,7 @@ namespace WMCDuplicateRemover
 
             response.Close();
 
+            EpisodeTitle = episodeName;
             return episodeName;
         }
     }

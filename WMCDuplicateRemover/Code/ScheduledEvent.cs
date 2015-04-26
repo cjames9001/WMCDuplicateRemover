@@ -24,6 +24,7 @@ namespace WMCDuplicateRemover
         public abstract DateTime StartTime { get; }
         public abstract DateTime EndTime { get; }
         public abstract ScheduleEventStates State { get; }
+        public String EpisodeTitle { get; private set; }
 
         public abstract void CancelEvent();
 
@@ -43,7 +44,9 @@ namespace WMCDuplicateRemover
 
         public bool CanEventBeCancelled(EntryWrapper entryWrapper, MetaDataWrapper metaDataWrapper)
         {
-            return WMCMetaDataAllowsForCancellation() && EventLogInformationAllowsForCancellation(entryWrapper, metaDataWrapper);
+            bool canEventBeCancelled = WMCMetaDataAllowsForCancellation() && EventLogInformationAllowsForCancellation(entryWrapper, metaDataWrapper);
+            EpisodeTitle = metaDataWrapper.EpisodeTitle;
+            return canEventBeCancelled;
         }
     }
 }

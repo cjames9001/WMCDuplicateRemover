@@ -30,6 +30,7 @@ namespace WMCDuplicateRemover
         }
         public DateTime OriginalAirDate { get; protected set; }
         public String SeriesID { get; protected set; }
+        public String EpisodeTitle { get; protected set; }
 
         public MetaDataWrapper()
         {
