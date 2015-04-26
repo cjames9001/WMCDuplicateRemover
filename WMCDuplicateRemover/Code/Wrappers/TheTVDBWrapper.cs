@@ -24,7 +24,7 @@ namespace WMCDuplicateRemover
             HttpWebRequest request = WebRequest.Create(BuildSeriesURL()) as HttpWebRequest;
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
 
-            SeriesID = DeserializeSeriesXML(response.GetResponseStream()).SeriesID;
+            SeriesID = DeserializeSeriesXML<SeriesMetaData>(response.GetResponseStream(), "Series").SeriesID;
         }
 
         protected override string RequestTitleFromAPI()

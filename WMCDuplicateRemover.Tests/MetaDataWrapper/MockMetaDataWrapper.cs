@@ -22,10 +22,10 @@ namespace WMCDuplicateRemover.Tests
             switch (SeriesName)
             {
                 case "king of the hill":
-                    SeriesID = GetFromXML("KingOfTheHill.xml");
+                    SeriesID = GetSeriesMetaDataFromXML("KingOfTheHill.xml");
                     break;
                 case "the nightly show with larry wilmore":
-                    SeriesID = GetFromXML("TheNightlyShow.xml");
+                    SeriesID = GetSeriesMetaDataFromXML("TheNightlyShow.xml");
                     break;
                 default:
                     break;
@@ -37,26 +37,34 @@ namespace WMCDuplicateRemover.Tests
             switch (SeriesName)
             {
                 case "king of the hill":
-                    return "Bobby Goes Nuts";
+                    return GetEpisodeMetaDataFromXML("BobbyGoesNuts.xml");
                 case "the nightly show with larry wilmore":
-                    return "Walmart Closures & A Cop's Non-Lethal Force";
+                    return GetEpisodeMetaDataFromXML("WalmartClosures&ACop'sNon-LethalForce.xml");
                 case "the simpsons":
-                    return "Peeping Mom";
+                    return GetEpisodeMetaDataFromXML("PeepingMom.xml");
                 case "forensic files":
-                    return "The Disappearance of Helle Crafts";
+                    return GetEpisodeMetaDataFromXML("TheDisappearanceofHelleCrafts.xml");
                 case "last week tonight":
-                    return "Patents";
+                    return GetEpisodeMetaDataFromXML("Patents.xml");
             }
 
             throw new NullReferenceException("The episode was not found, not much we can do... I suppose you could contribute to the open source database.....");
         }
 
-        private string GetFromXML(string fileName)
+        private string GetSeriesMetaDataFromXML(string fileName)
         {
             var fs = new FileStream(fileName, FileMode.Open);
-            Series series = DeserializeSeriesXML(fs);
+            SeriesMetaData series = DeserializeSeriesXML<SeriesMetaData>(fs, "Series");
             fs.Close();
             return series.SeriesID;
+        }
+
+        private string GetEpisodeMetaDataFromXML(string fileName)
+        {
+            var fs = new FileStream(fileName, FileMode.Open);
+            EpisodeMetaData episode = DeserializeSeriesXML<EpisodeMetaData>(fs, "Episode");
+            fs.Close();
+            return episode.EpisodeName;
         }
     }
 }

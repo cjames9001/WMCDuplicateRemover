@@ -83,8 +83,25 @@ namespace WMCDuplicateRemover
 
         protected abstract String RequestTitleFromAPI();
 
+        protected T DeserializeSeriesXML<T>(Stream xmlStream, String nodeToStartAt)
+        {
+            T tvSeries = default(T);
+
+            using (XmlReader reader = XmlReader.Create(xmlStream))
+            {
+                reader.MoveToContent();
+                reader.ReadToDescendant(nodeToStartAt);
+                var serializer = new XmlSerializer(typeof(T));
+                tvSeries = (T)serializer.Deserialize(reader);
+            }
+
+            return tvSeries;
+        }
+
+        #region Internal Classes
+
         [XmlType("Series"), Serializable]
-        public class Series
+        public class SeriesMetaData
         {
             [XmlElement("seriesid")]
             public String SeriesID { get; set; }
@@ -117,20 +134,86 @@ namespace WMCDuplicateRemover
             public String ID { get; set; }
         }
 
-        protected Series DeserializeSeriesXML(Stream xmlStream)
+        [XmlType("Episode"), Serializable]
+        public class EpisodeMetaData
         {
-            Series tvSeries = null;
+            [XmlElement("id")]
+            public String ID { get; set; }
 
-            using (XmlReader reader = XmlReader.Create(xmlStream))
-            {
-                reader.MoveToContent();
-                reader.ReadToDescendant("Series");
-                var serializer = new XmlSerializer(typeof(Series));
-                tvSeries = serializer.Deserialize(reader) as Series;
-            }
+            [XmlElement("Combined_episodenumber")]
+            public String CombinedEpisodeNumber { get; set; }
 
-            return tvSeries;
+            [XmlElement("Combined_season")]
+            public String CombinedSeason { get; set; }
+
+            [XmlElement("DVD_chapter")]
+            public String DVDChapter { get; set; }
+
+            [XmlElement("DVD_discid")]
+            public String DVDDiscID { get; set; }
+
+            [XmlElement("DVD_episodenumber")]
+            public String DVDEpisodeNumber { get; set; }
+
+            [XmlElement("DVD_season")]
+            public String DVDSeason { get; set; }
+
+            [XmlElement("Director")]
+            public String Director { get; set; }
+
+            [XmlElement("EpImgFlag")]
+            public String EpImageFlage { get; set; }
+
+            [XmlElement("EpisodeName")]
+            public String EpisodeName { get; set; }
+
+            [XmlElement("EpisodeNumber")]
+            public String EpisodeNumber { get; set; }
+
+            [XmlElement("FirstAired")]
+            public DateTime FirstAired { get; set; }
+
+            [XmlElement("GuestStars")]
+            public String GuestStars { get; set; }
+
+            [XmlElement("IMDB_ID")]
+            public String IMDBID { get; set; }
+
+            [XmlElement("Language")]
+            public String Language { get; set; }
+
+            [XmlElement("Overview")]
+            public String Overview { get; set; }
+
+            [XmlElement("ProductionCode")]
+            public String ProductionCode { get; set; }
+
+            [XmlElement("Rating")]
+            public String Rating { get; set; }
+
+            [XmlElement("SeasonNumber")]
+            public String SeasonNumber { get; set; }
+
+            [XmlElement("Writer")]
+            public String Writer { get; set; }
+
+            [XmlElement("absolute_number")]
+            public String AbosoluteNumber { get; set; }
+
+            [XmlElement("filename")]
+            public String FileName { get; set; }
+
+            [XmlElement("lastupdated")]
+            public String LastUpdated { get; set; }
+
+            [XmlElement("seasonid")]
+            public String SeasonID { get; set; }
+
+            [XmlElement("seriesid")]
+            public String SeriesID { get; set; }
         }
+
+        #endregion
 
         #region Object overrides
 

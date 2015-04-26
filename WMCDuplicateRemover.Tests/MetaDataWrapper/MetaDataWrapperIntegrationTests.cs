@@ -6,8 +6,7 @@ using System.Text;
 
 namespace WMCDuplicateRemover.Tests
 {
-    [Ignore]
-    [TestFixture]
+    [TestFixture, Explicit]
     public class MetaDataWrapperIntegrationTests
     {
         [TestCaseSource(typeof(GetEpisodeTitleFromOriginalAirDateIntegrationTests))]
