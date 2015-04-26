@@ -146,5 +146,10 @@ namespace WMCDuplicateRemover
         {
             _scheduledEvent.Cancel();
         }
+
+        public bool CanEventBeCancelled()
+        {
+            return false;
+        }
     }
 }

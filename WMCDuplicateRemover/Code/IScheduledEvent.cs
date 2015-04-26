@@ -26,5 +26,6 @@ namespace WMCDuplicateRemover
         ScheduleEventStates State { get; }
 
         void CancelEvent();
+        bool CanEventBeCancelled();
     }
 }

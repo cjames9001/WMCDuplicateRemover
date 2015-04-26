@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace WMCDuplicateRemover.Tests
 {
-    public class BuildGetSeriesUrlTests : TestMetaDataWrapper
+    public class BuildGetSeriesUrlTests : TestData
     {
         protected override IEnumerable CreateTestData()
         {

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace WMCDuplicateRemover.Tests
 {
-    public class BuildGetEpisodeByAirDateUrlTests : TestMetaDataWrapper
+    public class BuildGetEpisodeByAirDateUrlTests : TestData
     {
         private MetaDataWrapper CreateMetaDataWrapper(String seriesName, DateTime originalAirDate)
         {

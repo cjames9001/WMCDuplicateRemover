@@ -132,7 +132,16 @@ namespace WMCDuplicateRemover.Tests
 
         public void CancelEvent()
         {
-            throw new NotImplementedException();
+            //Event Gets Cancelled
+        }
+
+        public bool CanEventBeCancelled()
+        {
+            if (OriginalAirDate.Date == DateTime.MinValue.Date)
+                return false;
+            if (Repeat && OriginalAirDate < DateTime.Now)
+                return true;
+            return false;
         }
     }
 }
