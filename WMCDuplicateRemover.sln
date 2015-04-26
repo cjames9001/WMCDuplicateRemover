@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMCDuplicateRemover", "WMCDuplicateRemover\WMCDuplicateRemover.csproj", "{E9A9FA25-E578-4308-BAA9-FEEF4DD1EF76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMCDuplicateRemover.Tests", "WMCDuplicateRemover.Tests\WMCDuplicateRemover.Tests.csproj", "{3B3F56E4-9179-4EDF-9320-0DE6B871F164}"
@@ -20,6 +18,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E9A9FA25-E578-4308-BAA9-FEEF4DD1EF76}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E9A9FA25-E578-4308-BAA9-FEEF4DD1EF76}.Debug|Any CPU.Build.0 = Debug|x86
 		{E9A9FA25-E578-4308-BAA9-FEEF4DD1EF76}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{E9A9FA25-E578-4308-BAA9-FEEF4DD1EF76}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{E9A9FA25-E578-4308-BAA9-FEEF4DD1EF76}.Debug|x64.ActiveCfg = Debug|x86
