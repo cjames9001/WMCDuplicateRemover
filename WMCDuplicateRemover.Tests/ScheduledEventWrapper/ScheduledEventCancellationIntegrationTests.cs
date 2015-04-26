@@ -63,7 +63,7 @@ namespace WMCDuplicateRemover.Tests
                 "King of the Hill",
                 "When Hank forgets to mail his insurance payment, the coverage lapses for 36 hours, causing Hank and Bobby to go into a state of emergency to protect the house from any major disasters.  Meanwhile, Dale decides to raise bees, Bill and Boomhauer discover th",
                 false,
-                new DateTime(2005, 6, 3),
+                new DateTime(2005, 3, 6),
                 true,
                 new DateTime(2015, 4, 29),
                 Microsoft.MediaCenter.TV.Scheduling.ScheduleEventStates.WillOccur))
