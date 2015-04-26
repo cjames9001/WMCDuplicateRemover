@@ -99,6 +99,8 @@ namespace WMCDuplicateRemover
                 catch(Exception ex)
                 {
                     MediaCenterEnvironment.Dialog(String.Format("There was an error processing:\n{0}", ex.Message), Resources.DialogCaption, new object[] { DialogButtons.Ok }, 0, true, null, delegate(DialogResult dialogResult) { });
+                    String logText = String.Format("Error processing Exception Message: {1}{0}Inner Exception: {2}{0}Stack Trace: {3}{0}", Environment.NewLine, ex.Message, ex.InnerException.ToString(), ex.StackTrace);
+                    AppendTextToFile(logText);
                     return new List<String>();
                 }
             }         
