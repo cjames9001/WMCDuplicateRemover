@@ -43,6 +43,11 @@ namespace WMCDuplicateRemover.Tests
                 .SetDescription("Check that series id and original air date has value")
                 .SetName("TestGetTitleForKingOfTheHillEpisode");
 
+            yield return new TestCaseData(CreateMetaDataWrapper("King of The Hill", new DateTime(2001, 11, 11)))
+                .Returns("Bobby Goes Nuts")
+                .SetDescription("Check that series id and original air date has value")
+                .SetName("TestGetTitleForKingOfTheHillEpisodeGetsSeriesInfoFromCache");
+
             yield return new TestCaseData(CreateMetaDataWrapper("BlahBlahBlah", new DateTime(2015, 7, 21)))
                 .Throws(typeof(NullReferenceException))
                 .SetDescription("Check that series id and original air date has value")

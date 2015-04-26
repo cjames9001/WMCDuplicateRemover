@@ -27,6 +27,14 @@ namespace WMCDuplicateRemover
             SeriesID = DeserializeXMLStreamStartingAtNode<SeriesMetaData>(response.GetResponseStream(), "Series").SeriesID;
 
             response.Close();
+
+            UpdateCache();
+        }
+
+        private void UpdateCache()
+        {
+            if (!String.IsNullOrEmpty(SeriesID))
+                seriesIdCache.Add(SeriesName, SeriesID);
         }
 
         protected override string RequestTitleFromAPI()
