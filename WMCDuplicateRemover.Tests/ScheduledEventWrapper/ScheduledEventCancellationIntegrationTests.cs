@@ -25,11 +25,11 @@ namespace WMCDuplicateRemover.Tests
 
             yield return new TestCaseData(new MockScheduledEvent(
                 "The Simpsons",
-                "Mary Spuckler (guest voice Zooey Deschanel) returns to Springfield and pulls Bart's heartstring once again; Homer winds up in the dog house.",
+                "Days of Future Future",
                 false,
-                new DateTime(2013, 2, 10, 21, 0, 0),
+                new DateTime(2014, 4, 13, 21, 0, 0),
                 true,
-                new DateTime(2013, 2, 10, 21, 0, 0),
+                new DateTime(2016, 2, 10, 21, 0, 0),
                 Microsoft.MediaCenter.TV.Scheduling.ScheduleEventStates.WillOccur))
                 .Returns(true)
                 .SetDescription("Check that repeat can be cancelled")
