@@ -88,20 +88,32 @@ namespace WMCDuplicateRemover
                     var eventScheduler = new EventScheduleWrapper();
                     var scheduledEvents = eventScheduler.GetEventsScheduledToRecord();
                     scheduledEvents.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
+                    if (scheduledEvents.Count != 0)
+                    {
+                        MediaCenterEnvironment.Dialog(String.Format("There are:{0}", scheduledEvents.Count), Resources.DialogCaption, new object[] { DialogButtons.Ok }, 0, true, null, delegate(DialogResult dialogResult) { });
+                        scheduledEvents = scheduledEvents.GetRange(0, 10);
+                    }
                     List<String> scheduledEventNames = new List<String>();
                     foreach (var scheduledEvent in scheduledEvents)
                     {
                         scheduledEventNames.Add(
-                            String.Format("StartTime:{0} Title:{1}\nOriginal Air:{2}\nDescription:{3}\nState:{4}\nPartial:{5}\nIsRepeat{6}", 
+                            String.Format("StartTime:{0} Title:{1} Original Air:{2}\nState:{4} Partial:{5} Repeat:{6}\nSID:{7} CID: {8} K:{9} Q:{10}\nCopy:{11} Genre:{12}\nDescription:{3}", 
                             scheduledEvent.StartTime.ToString(),
                             scheduledEvent.Title, 
                             scheduledEvent.OriginalAirDate.ToShortDateString(), 
                             scheduledEvent.Description,
                             scheduledEvent.State.ToString(),
                             scheduledEvent.Partial.ToString(),
-                            scheduledEvent.Repeat.ToString()));
+                            scheduledEvent.Repeat.ToString(),
+                            scheduledEvent.ServiceID,
+                            scheduledEvent.ChannelID,
+                            scheduledEvent.KeepUntil.ToString(),
+                            scheduledEvent.Quality.ToString(),
+                            scheduledEvent.ProviderCopyright,
+                            scheduledEvent.Genre));
                     }
-
+                    if (scheduledEventNames.Count == 0)
+                        return new List<String> { "Nothing", "Showed", "Up" };
                     return scheduledEventNames;
                 }
                 catch(Exception ex)
