@@ -54,7 +54,7 @@ namespace WMCDuplicateRemover.Tests
         private string GetSeriesMetaDataFromXML(string fileName)
         {
             var fs = new FileStream(fileName, FileMode.Open);
-            SeriesMetaData series = DeserializeSeriesXML<SeriesMetaData>(fs, "Series");
+            SeriesMetaData series = DeserializeXMLStreamStartingAtNode<SeriesMetaData>(fs, "Series");
             fs.Close();
             return series.SeriesID;
         }
@@ -62,7 +62,7 @@ namespace WMCDuplicateRemover.Tests
         private string GetEpisodeMetaDataFromXML(string fileName)
         {
             var fs = new FileStream(fileName, FileMode.Open);
-            EpisodeMetaData episode = DeserializeSeriesXML<EpisodeMetaData>(fs, "Episode");
+            EpisodeMetaData episode = DeserializeXMLStreamStartingAtNode<EpisodeMetaData>(fs, "Episode");
             fs.Close();
             return episode.EpisodeName;
         }

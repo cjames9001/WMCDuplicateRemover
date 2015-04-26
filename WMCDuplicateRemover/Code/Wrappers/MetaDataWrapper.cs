@@ -83,7 +83,7 @@ namespace WMCDuplicateRemover
 
         protected abstract String RequestTitleFromAPI();
 
-        protected T DeserializeSeriesXML<T>(Stream xmlStream, String nodeToStartAt)
+        protected T DeserializeXMLStreamStartingAtNode<T>(Stream xmlStream, String nodeToStartAt)
         {
             T tvSeries = default(T);
 
