@@ -88,10 +88,15 @@ namespace WMCDuplicateRemover
                 string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "WMCDuplicateRemoverDryRun.log");
                 try
                 {
+                    AppendTextToFile("before creating event schedule", logPath);
                     var eventScheduler = new EventScheduleWrapper();
+                    AppendTextToFile("before creating scheduled events", logPath);
                     var scheduledEvents = eventScheduler.GetEventsScheduledToRecord();
+                    AppendTextToFile("before sorting scheduled events", logPath);
                     scheduledEvents.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
+                    AppendTextToFile("before initing string list", logPath);
                     List<String> duplicateScheduledEvents = new List<String>();
+                    AppendTextToFile("before processing dups", logPath);
                     ProcessDuplicates(scheduledEvents, duplicateScheduledEvents, logPath);
 
                     return duplicateScheduledEvents;
