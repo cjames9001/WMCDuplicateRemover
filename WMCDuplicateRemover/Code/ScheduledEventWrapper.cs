@@ -38,7 +38,7 @@ namespace WMCDuplicateRemover
                         _title = _scheduledEvent.GetExtendedProperty("Title").ToString();
                     return _title;
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return String.Empty;
                 }
@@ -53,7 +53,7 @@ namespace WMCDuplicateRemover
                 {
                     return _scheduledEvent.GetExtendedProperty("ServiceID").ToString();
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return String.Empty;
                 }
@@ -68,7 +68,7 @@ namespace WMCDuplicateRemover
                 {
                     return _scheduledEvent.GetExtendedProperty("ChannelID").ToString();
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return String.Empty;
                 }
@@ -86,7 +86,7 @@ namespace WMCDuplicateRemover
                         _description = _scheduledEvent.GetExtendedProperty("Description").ToString();
                     return _description;
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return String.Empty;
                 }
@@ -101,7 +101,7 @@ namespace WMCDuplicateRemover
                 {
                     return Convert.ToInt32(_scheduledEvent.GetExtendedProperty("KeepUntil"));
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return 0;
                 }
@@ -116,7 +116,7 @@ namespace WMCDuplicateRemover
                 {
                     return Convert.ToInt32(_scheduledEvent.GetExtendedProperty("Quality"));
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return 0;
                 }
@@ -131,7 +131,7 @@ namespace WMCDuplicateRemover
                 {
                     return Convert.ToBoolean(_scheduledEvent.GetExtendedProperty("Partial"));
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return false;
                 }
@@ -146,7 +146,7 @@ namespace WMCDuplicateRemover
                 {
                     return _scheduledEvent.GetExtendedProperty("ProviderCopyright").ToString();
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return String.Empty;
                 }
@@ -161,7 +161,7 @@ namespace WMCDuplicateRemover
                 {
                     return Convert.ToDateTime(_scheduledEvent.GetExtendedProperty("OriginalAirDate")).ToLocalTime();
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return DateTime.MinValue;
                 }
@@ -176,7 +176,7 @@ namespace WMCDuplicateRemover
                 {
                     return Convert.ToBoolean(_scheduledEvent.GetExtendedProperty("Repeat"));
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return false;
                 }
@@ -191,7 +191,7 @@ namespace WMCDuplicateRemover
                 {
                     return _scheduledEvent.GetExtendedProperty("Genre").ToString();
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return String.Empty;
                 }
@@ -206,7 +206,7 @@ namespace WMCDuplicateRemover
                 {
                     return _scheduledEvent.GetExtendedProperty("FileName").ToString();
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return String.Empty;
                 }
@@ -221,7 +221,7 @@ namespace WMCDuplicateRemover
                 {
                     return _scheduledEvent.StartTime.ToLocalTime();
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return DateTime.MinValue;
                 }
@@ -236,7 +236,7 @@ namespace WMCDuplicateRemover
                 {
                     return _scheduledEvent.EndTime.ToLocalTime();
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return DateTime.MinValue;
                 }
@@ -251,7 +251,7 @@ namespace WMCDuplicateRemover
                 {
                     return _scheduledEvent.State;
                 }
-                catch
+                catch(NullReferenceException)
                 {
                     return ScheduleEventStates.None;
                 }
