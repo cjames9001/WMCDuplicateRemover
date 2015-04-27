@@ -134,7 +134,7 @@ namespace WMCDuplicateRemover
                             scheduledEvent.Repeat.ToString());
 
                         duplicateScheduledEvents.Add(scheduledEventText);
-
+                        AppendTextToFile("after add", logPath);
                         SendDuplicateInfoToFile(scheduledEvent.ToString(), logPath);
                     }
                 }
