@@ -192,8 +192,10 @@ namespace WMCDuplicateRemover
             return String.Format("{0}.{1}{2}Series Title: {3}{2}Episode Title: {4}{2}Description: {5}{2}ServiceID: {6}{2}ChannelID: {7}{2}" + 
                 "Keep Until: {8}{2}Quality: {9}{2}Partial: {10}{2}Provider Copyright: {11}{2}Original Air Date: {12}{2}Repeat: {13}{2}Genre: {14}{2}" + 
                 "File Name: {15}{2}Start Time: {16}{2}End Time: {17}{2}State: {18}{2}",
-                this.GetType().Namespace,
-                this.GetType().Name,
+                //this.GetType().Namespace,
+                //this.GetType().Name,
+                "",
+                "",
                 Environment.NewLine,
                 String.IsNullOrEmpty(Title) ? "" : Title,
                 EpisodeTitle,
