@@ -126,6 +126,7 @@ namespace WMCDuplicateRemover
 
                         duplicateScheduledEvents.Add(scheduledEventText);
                         SendDuplicateInfoToFile(scheduledEvent.ToString());
+                        scheduledEvent.CancelEvent();
                     }
                 }
                 catch(Exception ex)
