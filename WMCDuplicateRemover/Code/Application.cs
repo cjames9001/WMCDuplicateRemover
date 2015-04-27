@@ -130,7 +130,7 @@ namespace WMCDuplicateRemover
                 }
                 catch(Exception ex)
                 {
-                    String logText = String.Format("Error processing {0}{1}Exception Message: {2}{1}Inner Exception: {3}{1}Stack Trace: {4}{1}", scheduledEvent.ToString(), Environment.NewLine, ex.Message, ex.InnerException.ToString(), ex.StackTrace);
+                    String logText = String.Format("Error processing {0}{1}Exception Message: {2}{1}Inner Exception: {3}{1}Stack Trace: {4}{1}", scheduledEvent.ToString(), Environment.NewLine, ex.Message, ex.InnerException != null ? ex.InnerException.ToString() : "No Inner Exception", ex.StackTrace);
                     AppendTextToFile(logText);
                 }
             }
