@@ -53,6 +53,7 @@ namespace WMCDuplicateRemover.Tests
         [Test]
         public void TestScheduledEventToString()
         {
+            //TODO: Make this a real test
             Assert.AreNotEqual("", new ScheduledEventWrapper().ToString());
         }
 
