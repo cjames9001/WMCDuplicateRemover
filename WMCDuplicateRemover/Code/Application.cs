@@ -89,7 +89,7 @@ namespace WMCDuplicateRemover
                 try
                 {
                     var eventScheduler = new EventScheduleWrapper();
-                    var scheduledEvents = eventScheduler.GetEventsScheduledToRecord().GetRange(0, 20);
+                    var scheduledEvents = eventScheduler.GetEventsScheduledToRecord();
                     scheduledEvents.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
                     List<String> duplicateScheduledEvents = new List<String>();
                     ProcessDuplicates(scheduledEvents, duplicateScheduledEvents);
