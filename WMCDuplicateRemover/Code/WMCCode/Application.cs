@@ -96,6 +96,7 @@ namespace WMCDuplicateRemover
                     List<String> duplicateScheduledEvents = new List<String>();
                     Stopwatch stopwatch = new Stopwatch();
                     stopwatch.Start();
+                    UpdateEPG();
                     ProcessDuplicates(scheduledEvents, duplicateScheduledEvents);
                     stopwatch.Stop();
                     AppendTextToFile(String.Format("Finished Processing: {0}/{1} Cancelled in {2}", duplicateScheduledEvents.Count, scheduledEvents.Count, stopwatch.Elapsed));
@@ -109,6 +110,25 @@ namespace WMCDuplicateRemover
                     return new List<String>();
                 }
             }         
+        }
+
+        private void UpdateEPG()
+        {
+            var epgDownloadProcess = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "mc2xml.exe"
+                }
+            };
+
+            var cwd = Directory.GetCurrentDirectory();
+            Directory.SetCurrentDirectory(programDataFolder);
+
+            epgDownloadProcess.Start();
+            epgDownloadProcess.WaitForExit();
+
+            Directory.SetCurrentDirectory(cwd);
         }
 
         private void ProcessDuplicates(List<ScheduledEvent> scheduledEvents, List<String> duplicateScheduledEvents)
