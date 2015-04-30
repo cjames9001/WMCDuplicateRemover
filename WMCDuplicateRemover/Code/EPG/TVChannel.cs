@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
+
+namespace WMCDuplicateRemover.Code.EPG
+{
+    public class TVChannel
+    {
+        [XmlAttribute("id")]
+        public String ChannelID { get; set; }
+
+        [XmlElement("display-name")]
+        public List<String> ChannelInfo { get; set; }
+    }
+}

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using Microsoft.MediaCenter; 
 using Microsoft.MediaCenter.Hosting; 
 using Microsoft.MediaCenter.UI;
+using WMCDuplicateRemover.Code.EPG;
 
 namespace WMCDuplicateRemover
 {
@@ -30,7 +31,8 @@ namespace WMCDuplicateRemover
     {
         private AddInHost host;
         private HistoryOrientedPageSession session;
-        private readonly string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "WMCDuplicateRemoverDryRun.log");
+        private static String programDataFolder = String.Format("{0}{1}", Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "WMCDuplicateRemover");
+        private readonly string logPath = Path.Combine(programDataFolder, "WMCDuplicateRemoverDryRun.log");
 
         public Application()
             : this(null, null)
@@ -112,27 +114,31 @@ namespace WMCDuplicateRemover
             {
                 try
                 {
-                    var metaData = new TheTVDBWrapper(scheduledEvent.Title, scheduledEvent.OriginalAirDate);
-                    if (scheduledEvent.CanEventBeCancelled(new EventLogEntryWrapper(), metaData))
+                    var tv = new TV(Path.Combine(programDataFolder, "xmltv.xml"));
+                    var episode = tv.GetEpisodeMetaDataBasedOnWMCMetaData(scheduledEvent.StartTime, scheduledEvent.EndTime, scheduledEvent.OriginalAirDate, Convert.ToInt32(scheduledEvent.ChannelID));
+                    if (scheduledEvent.CanEventBeCancelled(new EventLogEntryWrapper(), episode))
                     {
-                        var scheduledEventText = String.Format("StartTime:{0} Title:{1}\nOriginal Air:{2}\nDescription:{3}\nState:{4}\nPartial:{5}\nIsRepeat{6}",
-                            scheduledEvent.StartTime.ToString(),
-                            scheduledEvent.Title,
-                            scheduledEvent.OriginalAirDate.ToShortDateString(),
-                            scheduledEvent.Description,
-                            scheduledEvent.State.ToString(),
-                            scheduledEvent.Partial.ToString(),
-                            scheduledEvent.Repeat.ToString());
+                        //var scheduledEventText = String.Format("StartTime:{0} Title:{1}\nOriginal Air:{2}\nDescription:{3}\nState:{4}\nPartial:{5}\nIsRepeat{6}",
+                        //    scheduledEvent.StartTime.ToString(),
+                        //    scheduledEvent.Title,
+                        //    scheduledEvent.OriginalAirDate.ToShortDateString(),
+                        //    scheduledEvent.Description,
+                        //    scheduledEvent.State.ToString(),
+                        //    scheduledEvent.Partial.ToString(),
+                        //    scheduledEvent.Repeat.ToString());
 
-                        duplicateScheduledEvents.Add(scheduledEventText);
-                        SendDuplicateInfoToFile(scheduledEvent.ToString());
-                        scheduledEvent.CancelEvent();
+                        duplicateScheduledEvents.Add(episode.ToString());
+                        SendDuplicateInfoToFile(episode.ToString());
+                        //scheduledEvent.CancelEvent();
                     }
                 }
                 catch(Exception ex)
                 {
-                    String logText = String.Format("Error processing {0}{1}Exception Message: {2}{1}Inner Exception: {3}{1}Stack Trace: {4}{1}", scheduledEvent.ToString(), Environment.NewLine, ex.Message, ex.InnerException != null ? ex.InnerException.ToString() : "No Inner Exception", ex.StackTrace);
-                    AppendTextToFile(logText);
+                    if (!ex.Message.Contains("There are no episodes found for this listing"))
+                    {
+                        String logText = String.Format("Error processing {0}{1}Exception Message: {2}{1}Inner Exception: {3}{1}Stack Trace: {4}{1}", scheduledEvent.ToString(), Environment.NewLine, ex.Message, ex.InnerException != null ? ex.InnerException.ToString() : "No Inner Exception", ex.StackTrace);
+                        AppendTextToFile(logText);
+                    }
                 }
             }
         }

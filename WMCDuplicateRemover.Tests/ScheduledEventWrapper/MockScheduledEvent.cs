@@ -40,6 +40,20 @@ namespace WMCDuplicateRemover.Tests
             _state = state;
         }
 
+        public MockScheduledEvent(string title, string description, bool partial, DateTime originalAirDate, bool repeat, DateTime startTime, DateTime endTime, int channel, ScheduleEventStates state)
+            : this()
+        {
+            _title = title;
+            _description = description;
+            _partial = partial;
+            _originalAirDate = originalAirDate;
+            _repeat = repeat;
+            _startTime = startTime;
+            _endTime = endTime;
+            _channelId = channel.ToString();
+            _state = state;
+        }
+
         private string _title;
         public override string Title
         {

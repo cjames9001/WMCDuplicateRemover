@@ -50,6 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EPG\EPGIntegrationTestCases.cs" />
+    <Compile Include="EPG\EPGIntegrationTests.cs" />
+    <Compile Include="EPG\TVChannelTestCases.cs" />
+    <Compile Include="EPG\TVChannelTests.cs" />
+    <Compile Include="EPG\TVEpisodeTestCases.cs" />
     <Compile Include="MetaDataWrapper\BuildGetEpisodeByAirDateUrlTests.cs" />
     <Compile Include="EventScheduleTests.cs" />
     <Compile Include="MetaDataWrapper\GetEpisodeTitleFromOriginalAirDateIntegrationTests.cs" />

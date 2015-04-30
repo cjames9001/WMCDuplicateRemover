@@ -70,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\Application.cs" />
+    <Compile Include="Code\EPG\Episode.cs" />
+    <Compile Include="Code\EPG\TV.cs" />
+    <Compile Include="Code\EPG\TVChannel.cs" />
     <Compile Include="Code\EventScheduleWrapper.cs" />
     <Compile Include="Code\IEventSchedule.cs" />
     <Compile Include="Code\ScheduledEvent.cs" />

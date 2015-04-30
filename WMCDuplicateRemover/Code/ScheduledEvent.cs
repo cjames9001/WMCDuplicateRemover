@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.MediaCenter.TV.Scheduling;
+using WMCDuplicateRemover.Code.EPG;
 
 namespace WMCDuplicateRemover
 {
@@ -47,6 +48,18 @@ namespace WMCDuplicateRemover
             bool canEventBeCancelled = WMCMetaDataAllowsForCancellation() && EventLogInformationAllowsForCancellation(entryWrapper, metaDataWrapper);
             EpisodeTitle = metaDataWrapper.EpisodeTitle;
             return canEventBeCancelled;
+        }
+
+        public bool CanEventBeCancelled(EntryWrapper entryWrapper, Episode episode)
+        {
+            bool canEventBeCancelled = WMCMetaDataAllowsForCancellation() && EventLogInformationAllowsForCancellation(entryWrapper, episode);
+            EpisodeTitle = episode.EpisodeName;
+            return canEventBeCancelled;
+        }
+
+        internal bool EventLogInformationAllowsForCancellation(EntryWrapper entryWrapper, Episode episode)
+        {
+            return entryWrapper.FoundEventForRecording(episode.SeriesName, episode.EpisodeName);
         }
     }
 }
