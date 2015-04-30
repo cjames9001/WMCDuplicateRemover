@@ -56,13 +56,20 @@ namespace WMCDuplicateRemover.Code.EPG
 
         private DateTime GetDateFromDateString(String timeString)
         {
-            var year = Convert.ToInt32(timeString.Substring(0, 4));
-            var month = Convert.ToInt32(timeString.Substring(4, 2));
-            var day = Convert.ToInt32(timeString.Substring(6, 2));
-            var hour = Convert.ToInt32(timeString.Substring(8, 2));
-            var minute = Convert.ToInt32(timeString.Substring(10, 2));
-            var second = Convert.ToInt32(timeString.Substring(12, 2));
-            return new DateTime(year, month, day, hour, minute, second);
+            try
+            {
+                var year = Convert.ToInt32(timeString.Substring(0, 4));
+                var month = Convert.ToInt32(timeString.Substring(4, 2));
+                var day = Convert.ToInt32(timeString.Substring(6, 2));
+                var hour = Convert.ToInt32(timeString.Substring(8, 2));
+                var minute = Convert.ToInt32(timeString.Substring(10, 2));
+                var second = Convert.ToInt32(timeString.Substring(12, 2));
+                return new DateTime(year, month, day, hour, minute, second);
+            }
+            catch
+            {
+                return DateTime.MinValue;
+            }
         }
 
         #region Object overrides
@@ -96,15 +103,16 @@ namespace WMCDuplicateRemover.Code.EPG
         {
             try
             {
-                return String.Format("{0}.{1}{2}Series Title: {3}{2}Episode Title: {4}{2}Description: {5}{2}ChannelID: {6}{2}Original Air Date: {7}{2}",
-                    this.GetType().Namespace,
-                    this.GetType().Name,
+                return String.Format("{1}: {2}{0}Scheduled For: {3}{0}Description: {4}{0}ChannelID: {5}{0}Original Air Date: {6}{0}{7}.{8}{0}",
                     Environment.NewLine,
                     SeriesName,
                     EpisodeName,
+                    Start,
                     Description,
                     ChannelID,
-                    OriginalAirDate);
+                    OriginalAirDate,
+                    this.GetType().Namespace,
+                    this.GetType().Name);
             }
             catch (Exception ex)
             {

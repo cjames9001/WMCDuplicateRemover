@@ -50,7 +50,7 @@ namespace WMCDuplicateRemover.Code.EPG
         public Episode GetEpisodeMetaDataBasedOnWMCMetaData(DateTime startTime, DateTime endTime, DateTime originalAirDate, int channelNumber)
         {
             var channelId = GetChannelFromNumber(channelNumber);
-            var possibleEpisodes = Listings.Programs.Where(x => (x.ChannelID == channelId && x.Start == startTime && x.End == endTime && x.OriginalAirDate == originalAirDate)).ToList();
+            var possibleEpisodes = Listings.Programs.Where(x => (x.OriginalAirDate != DateTime.MinValue && x.ChannelID == channelId && x.Start == startTime && x.End == endTime && x.OriginalAirDate == originalAirDate)).ToList();
 
             if (possibleEpisodes.Count > 1)
                 throw new InvalidOperationException("There can only be one episode, there must be something terribly wrong with the EPG Data. Certainty is not 100% and cannot continue");

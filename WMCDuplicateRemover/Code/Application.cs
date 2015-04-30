@@ -31,8 +31,8 @@ namespace WMCDuplicateRemover
     {
         private AddInHost host;
         private HistoryOrientedPageSession session;
-        private static String programDataFolder = String.Format("{0}{1}", Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "WMCDuplicateRemover");
-        private readonly string logPath = Path.Combine(programDataFolder, "WMCDuplicateRemoverDryRun.log");
+        private static String programDataFolder = String.Format("{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "WMCDuplicateRemover");
+        private readonly string logPath = Path.Combine(programDataFolder, "WMCDuplicateRemover.log");
 
         public Application()
             : this(null, null)
@@ -94,8 +94,11 @@ namespace WMCDuplicateRemover
                     var scheduledEvents = eventScheduler.GetEventsScheduledToRecord();
                     scheduledEvents.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
                     List<String> duplicateScheduledEvents = new List<String>();
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
                     ProcessDuplicates(scheduledEvents, duplicateScheduledEvents);
-                    AppendTextToFile("Processing Is Finished");
+                    stopwatch.Stop();
+                    AppendTextToFile(String.Format("Finished Processing: {0}/{1} Cancelled in {2}", duplicateScheduledEvents.Count, scheduledEvents.Count, stopwatch.Elapsed));
                     return duplicateScheduledEvents;
                 }
                 catch(Exception ex)
@@ -110,33 +113,34 @@ namespace WMCDuplicateRemover
 
         private void ProcessDuplicates(List<ScheduledEvent> scheduledEvents, List<String> duplicateScheduledEvents)
         {
+            var eventLogWrapper = new EventLogEntryWrapper();
+
             foreach (var scheduledEvent in scheduledEvents)
             {
+                var episode = new Episode();
                 try
                 {
                     var tv = new TV(Path.Combine(programDataFolder, "xmltv.xml"));
-                    var episode = tv.GetEpisodeMetaDataBasedOnWMCMetaData(scheduledEvent.StartTime, scheduledEvent.EndTime, scheduledEvent.OriginalAirDate, Convert.ToInt32(scheduledEvent.ChannelID));
-                    if (scheduledEvent.CanEventBeCancelled(new EventLogEntryWrapper(), episode))
+                    episode = tv.GetEpisodeMetaDataBasedOnWMCMetaData(scheduledEvent.StartTime, scheduledEvent.EndTime, scheduledEvent.OriginalAirDate, Convert.ToInt32(scheduledEvent.ChannelID));
+                    if (scheduledEvent.CanEventBeCancelled(eventLogWrapper, episode))
                     {
-                        //var scheduledEventText = String.Format("StartTime:{0} Title:{1}\nOriginal Air:{2}\nDescription:{3}\nState:{4}\nPartial:{5}\nIsRepeat{6}",
-                        //    scheduledEvent.StartTime.ToString(),
-                        //    scheduledEvent.Title,
-                        //    scheduledEvent.OriginalAirDate.ToShortDateString(),
-                        //    scheduledEvent.Description,
-                        //    scheduledEvent.State.ToString(),
-                        //    scheduledEvent.Partial.ToString(),
-                        //    scheduledEvent.Repeat.ToString());
+                        var scheduledEventText = String.Format("{0}State: {1}{2}Partial: {3}{2}Repeat: {4}{2}", 
+                            episode.ToString(), 
+                            scheduledEvent.State, 
+                            Environment.NewLine, 
+                            scheduledEvent.Partial.ToString(), 
+                            scheduledEvent.Repeat.ToString());
 
-                        duplicateScheduledEvents.Add(episode.ToString());
-                        SendDuplicateInfoToFile(episode.ToString());
-                        //scheduledEvent.CancelEvent();
+                        duplicateScheduledEvents.Add(scheduledEventText);
+                        SendDuplicateInfoToFile(scheduledEventText);
+                        scheduledEvent.CancelEvent();
                     }
                 }
                 catch(Exception ex)
                 {
                     if (!ex.Message.Contains("There are no episodes found for this listing"))
                     {
-                        String logText = String.Format("Error processing {0}{1}Exception Message: {2}{1}Inner Exception: {3}{1}Stack Trace: {4}{1}", scheduledEvent.ToString(), Environment.NewLine, ex.Message, ex.InnerException != null ? ex.InnerException.ToString() : "No Inner Exception", ex.StackTrace);
+                        String logText = String.Format("Error processing {0}{1}Exception Message: {2}{1}Inner Exception: {3}{1}Stack Trace: {4}{1}", episode.ToString(), Environment.NewLine, ex.Message, ex.InnerException != null ? ex.InnerException.ToString() : "No Inner Exception", ex.StackTrace);
                         AppendTextToFile(logText);
                     }
                 }

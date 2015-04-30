@@ -8,6 +8,21 @@ namespace WMCDuplicateRemover
 {
     public class EventLogEntryWrapper : EntryWrapper
     {
+        private List<String> eventLogCache;
+
+        public EventLogEntryWrapper()
+        {
+            eventLogCache = new List<String>();
+
+            var eventLog = new EventLog("Media Center");
+
+            foreach (EventLogEntry entry in eventLog.Entries)
+            {
+                if (entry.Source == "Recording")
+                    eventLogCache.Add(entry.Message.Trim().ToLower());
+            }
+        }
+
         public override bool FoundEventForRecording(String seriesName, String episodeName)
         {
             //Can't be cancelling shows we only have part of the information needed!
@@ -16,11 +31,9 @@ namespace WMCDuplicateRemover
 
             var formattedEventData = String.Format("{0}: {1}", seriesName, episodeName).Trim().ToLower();
 
-            var eventLog = new EventLog("Media Center");
-
-            foreach (EventLogEntry entry in eventLog.Entries)
+            foreach (String entry in eventLogCache)
             {
-                if (entry.Source == "Recording" && entry.Message.Trim().ToLower().Contains(formattedEventData))
+                if (entry.Contains(formattedEventData))
                     return true;
             }
 
