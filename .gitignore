@@ -4,6 +4,7 @@ WMCDuplicateRemover.Tests/[Oo]bj/
 WMCDuplicateRemover.Tests/[Bb]in/
 WMCDuplicateRemoverDriver/[Oo]bj/
 WMCDuplicateRemoverDriver/[Bb]in/
+packages/
 *.suo
 *.user
 /TestResults
