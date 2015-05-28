@@ -1,9 +1,0 @@
-﻿<application title="Duplicate Remover" id="FBCCD5EF-B75C-4272-90E4-6FDEF81D94DE">
-  <entrypoint id="DA055E62-08C2-4506-82DA-54614D8110D1" 
-              addin="WMCDuplicateRemover.MyAddIn, WMCDuplicateRemover,Culture=Neutral,Version=1.0.0.0,PublicKeyToken=c37c4f8731682cb0"               
-              title="Windows Media Center Duplicate Remover"               
-              description="A Windows Media Center Application that removes duplicate recordings"
-              ImageUrl=".\Application.png">
-    <category category="More Programs"/>
-  </entrypoint>
-</application>

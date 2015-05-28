@@ -55,13 +55,13 @@ namespace WMCDuplicateRemoverDriver
         private void ProcessDuplicates(List<ScheduledEvent> scheduledEvents, List<String> duplicateScheduledEvents)
         {
             var eventLogWrapper = new MicrosoftEventLogWrapper();
+            var tv = new TV(Path.Combine(programDataFolder, "xmltv.xml"));
 
             foreach (var scheduledEvent in scheduledEvents)
             {
                 var episode = new Episode();
                 try
                 {
-                    var tv = new TV(Path.Combine(programDataFolder, "xmltv.xml"));
                     episode = tv.GetEpisodeMetaDataBasedOnWMCMetaData(scheduledEvent.StartTime, scheduledEvent.EndTime, scheduledEvent.OriginalAirDate, Convert.ToInt32(scheduledEvent.ChannelID));
                     if (scheduledEvent.CanEventBeCancelled(eventLogWrapper, episode))
                     {
