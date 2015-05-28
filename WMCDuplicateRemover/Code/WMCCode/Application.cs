@@ -133,7 +133,7 @@ namespace WMCDuplicateRemover
 
         private void ProcessDuplicates(List<ScheduledEvent> scheduledEvents, List<String> duplicateScheduledEvents)
         {
-            var eventLogWrapper = new EventLogEntryWrapper();
+            var eventLogWrapper = new MicrosoftEventLogWrapper();
 
             foreach (var scheduledEvent in scheduledEvents)
             {

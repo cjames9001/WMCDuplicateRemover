@@ -5,9 +5,8 @@ using System.Text;
 
 namespace WMCDuplicateRemover
 {
-    public abstract class EntryWrapper
+    public abstract class EventLogWrapper
     {
-        public String EventLogMessage { get; private set; }
         public abstract bool FoundEventForRecording(String seriesName, String episodeName);
     }
 }

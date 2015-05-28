@@ -29,7 +29,7 @@ namespace WMCDuplicateRemover
 
         public abstract void CancelEvent();
 
-        internal bool EventLogInformationAllowsForCancellation(EntryWrapper entryWrapper, MetaDataWrapper metaDataWrapper)
+        internal bool EventLogInformationAllowsForCancellation(EventLogWrapper entryWrapper, MetaDataWrapper metaDataWrapper)
         {
             return entryWrapper.FoundEventForRecording(metaDataWrapper.SeriesName, metaDataWrapper.GetEpisodeTitleFromOriginalAirDate());
         }
@@ -43,21 +43,21 @@ namespace WMCDuplicateRemover
             return false;
         }
 
-        public bool CanEventBeCancelled(EntryWrapper entryWrapper, MetaDataWrapper metaDataWrapper)
+        public bool CanEventBeCancelled(EventLogWrapper entryWrapper, MetaDataWrapper metaDataWrapper)
         {
             bool canEventBeCancelled = WMCMetaDataAllowsForCancellation() && EventLogInformationAllowsForCancellation(entryWrapper, metaDataWrapper);
             EpisodeTitle = metaDataWrapper.EpisodeTitle;
             return canEventBeCancelled;
         }
 
-        public bool CanEventBeCancelled(EntryWrapper entryWrapper, Episode episode)
+        public bool CanEventBeCancelled(EventLogWrapper entryWrapper, Episode episode)
         {
             bool canEventBeCancelled = WMCMetaDataAllowsForCancellation() && EventLogInformationAllowsForCancellation(entryWrapper, episode);
             EpisodeTitle = episode.EpisodeName;
             return canEventBeCancelled;
         }
 
-        internal bool EventLogInformationAllowsForCancellation(EntryWrapper entryWrapper, Episode episode)
+        internal bool EventLogInformationAllowsForCancellation(EventLogWrapper entryWrapper, Episode episode)
         {
             return entryWrapper.FoundEventForRecording(episode.SeriesName, episode.EpisodeName);
         }

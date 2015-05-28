@@ -10,12 +10,12 @@ namespace WMCDuplicateRemover.Tests
     [TestFixture, Explicit]
     public class ScheduledEventIntegrationTests
     {
-        private EventLogEntryWrapper eventLogWrapper;
+        private MicrosoftEventLogWrapper eventLogWrapper;
 
         [TestFixtureSetUp]
         public void SetUp()
         {
-            eventLogWrapper = new EventLogEntryWrapper();
+            eventLogWrapper = new MicrosoftEventLogWrapper();
         }
 
         [TestCaseSource(typeof(ScheduledEventCancellationIntegrationTests))]

@@ -6,7 +6,7 @@ using WMCDuplicateRemover;
 
 namespace WMCDuplicateRemover.Tests
 {
-    public class MockEventLogEntryWrapper : EntryWrapper
+    public class MockEventLogWrapper : EventLogWrapper
     {
         public override bool FoundEventForRecording(string seriesName, string episodeName)
         {

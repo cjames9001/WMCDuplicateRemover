@@ -73,13 +73,14 @@
     <Compile Include="Code\EPG\Episode.cs" />
     <Compile Include="Code\EPG\TV.cs" />
     <Compile Include="Code\EPG\TVChannel.cs" />
+    <Compile Include="Code\Wrappers\EventLogEntryWrapper.cs" />
     <Compile Include="Code\Wrappers\EventScheduleWrapper.cs" />
     <Compile Include="Code\Wrappers\IEventSchedule.cs" />
     <Compile Include="Code\Wrappers\ScheduledEvent.cs" />
     <Compile Include="Code\WMCCode\Launch.cs" />
     <Compile Include="Code\Wrappers\ScheduledEventWrapper.cs" />
-    <Compile Include="Code\Wrappers\EntryWrapper.cs" />
-    <Compile Include="Code\Wrappers\EventLogEntryWrapper.cs" />
+    <Compile Include="Code\Wrappers\EventLogWrapper.cs" />
+    <Compile Include="Code\Wrappers\MicrosoftEventLogWrapper.cs" />
     <Compile Include="Code\Wrappers\TheTVDBWrapper.cs" />
     <Compile Include="Code\Wrappers\MetaDataWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

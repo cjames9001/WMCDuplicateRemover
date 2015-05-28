@@ -1,43 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace WMCDuplicateRemover
 {
-    public class EventLogEntryWrapper : EntryWrapper
+    public class EventLogEntryWrapper
     {
-        private List<String> eventLogCache;
+        private const String WMC_RECORDING_SOURCE = "Recording";
+        private List<long> ValidInstanceIds = new List<long>() { 1, 2, 3, 17, 24 };
+        private String Message { get; set; }
+        public long InstanceId { get; private set; }
+        public String Source { get; private set; }
 
-        public EventLogEntryWrapper()
+        public String RecordingName
         {
-            eventLogCache = new List<String>();
-
-            var eventLog = new EventLog("Media Center");
-
-            foreach (EventLogEntry entry in eventLog.Entries)
+            get
             {
-                if (entry.Source == "Recording")
-                    eventLogCache.Add(entry.Message.Trim().ToLower());
+                return GetRecordingNameFromMessage();
             }
         }
 
-        public override bool FoundEventForRecording(String seriesName, String episodeName)
+        private String GetRecordingNameFromMessage()
         {
-            //Can't be cancelling shows we only have part of the information needed!
-            if (String.IsNullOrEmpty(seriesName) || String.IsNullOrEmpty(episodeName))
-                return false;
-
-            var formattedEventData = String.Format("{0}: {1}", seriesName, episodeName).Trim().ToLower();
-
-            foreach (String entry in eventLogCache)
+            switch (InstanceId)
             {
-                if (entry.Contains(formattedEventData))
-                    return true;
+                case 1:
+                    return ParseRecordingNameWithExpressions("", " started recording on .* and stopped on .* as scheduled.$");
+                case 2:
+                    return ParseRecordingNameWithExpressions("Recording of ", " began as scheduled on .* while the program was already in progress.$");
+                case 3:
+                    return ParseRecordingNameWithExpressions("Recording of ", " began as scheduled on .* and was manually stopped on .*.$");
+                case 17:
+                    return ParseRecordingNameWithExpressions("", " was manually deleted on .* by .*.$");
+                default:
+                    return Message;
+            }
+        }
+
+        private String ParseRecordingNameWithExpressions(String prefixRegex, String suffixRegex)
+        {
+            var recordingName = Message;
+            var regex = Regex.Match(Message, prefixRegex);
+
+            if (regex.Success)
+            {
+                recordingName = recordingName.Substring(regex.Length, recordingName.Length - regex.Length);
             }
 
-            return false;
+            regex = Regex.Match(recordingName, suffixRegex);
+
+            if(regex.Success)
+            {
+                return recordingName.Substring(0, regex.Index);
+            }
+            return recordingName;
+        }
+
+        public bool IsValidRecordingEntry
+        {
+            get
+            {
+                return Source == WMC_RECORDING_SOURCE && ValidInstanceIds.Contains(InstanceId) && RecordingName.Contains(':');
+            }
+        }
+
+        public EventLogEntryWrapper(String message, String source, long instanceId)
+        {
+            Message = message;
+            InstanceId = instanceId;
+            Source = source;
         }
     }
 }
