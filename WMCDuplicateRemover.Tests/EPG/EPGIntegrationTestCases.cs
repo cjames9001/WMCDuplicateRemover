@@ -94,34 +94,6 @@ namespace WMCDuplicateRemover.Tests.EPG
                 .Returns(true)
                 .SetDescription("Check that repeat recording can be cancelled")
                 .SetName("TestCancelKingOfThEhillEpisodeRepeat");
-
-            yield return new TestCaseData(new MockScheduledEvent(
-                "The Nightly Show With Larry Wilmore",
-                "Larry Wilmore and his panel of guests give thier unique views on pop culture and current events.",
-                false,
-                DateTime.Now,
-                false,
-                DateTime.Now,
-                DateTime.Now,
-                659,
-                Microsoft.MediaCenter.TV.Scheduling.ScheduleEventStates.WillOccur))
-                .Returns(false)
-                .SetDescription("Check that original air date is today and marked as repeat will not cancel")
-                .SetName("TestCannotCancelNewShowMarkedAsNotRepeat");
-
-            yield return new TestCaseData(new MockScheduledEvent(
-                "Tosh.0",
-                "A child who is not microwave-safe is redeemed; games rather than humor; making grieving for loved ones fun.",
-                false,
-                DateTime.Now,
-                true,
-                DateTime.Now,
-                DateTime.Now,
-                659,
-                Microsoft.MediaCenter.TV.Scheduling.ScheduleEventStates.WillOccur))
-                .Returns(false)
-                .SetDescription("Check that original air date is today and not marked as repeat will not cancel")
-                .SetName("TestCannotCancelNewShowMarkedAsRepeat");
         }
     }
 }
