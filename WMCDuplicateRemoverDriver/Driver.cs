@@ -16,16 +16,19 @@ namespace WMCDuplicateRemoverDriver
 
         public void Run()
         {
+            AppendTextToFile("Begin Processing");
             var eventScheduler = new EventScheduleWrapper();
             var scheduledEvents = eventScheduler.GetEventsScheduledToRecord();
             scheduledEvents.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
             List<String> duplicateScheduledEvents = new List<String>();
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
+            AppendTextToFile("Updating EPG");
             UpdateEPG();
+            AppendTextToFile(String.Format("EPG Updated After {0}", stopwatch.Elapsed));
             ProcessDuplicates(scheduledEvents, duplicateScheduledEvents);
             stopwatch.Stop();
-            AppendTextToFile(String.Format("Finished Processing: {0}/{1} Cancelled in {2}", duplicateScheduledEvents.Count, scheduledEvents.Count, stopwatch.Elapsed));
+            AppendTextToFile(String.Format("Finished Processing: {0}/{1} Cancelled in {2}\n", duplicateScheduledEvents.Count, scheduledEvents.Count, stopwatch.Elapsed));
 
             //var a = Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Media Center\\Settings\\TVConfig", "iConfigured", null);
         }
