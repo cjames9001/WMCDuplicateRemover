@@ -29,8 +29,6 @@ namespace WMCDuplicateRemoverDriver
             ProcessDuplicates(scheduledEvents, duplicateScheduledEvents);
             stopwatch.Stop();
             AppendTextToFile(String.Format("Finished Processing: {0}/{1} Cancelled in {2}\n", duplicateScheduledEvents.Count, scheduledEvents.Count, stopwatch.Elapsed));
-
-            //var a = Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Media Center\\Settings\\TVConfig", "iConfigured", null);
         }
 
         private void UpdateEPG()
@@ -39,15 +37,23 @@ namespace WMCDuplicateRemoverDriver
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "mc2xml.exe"
+                    FileName = "mc2xml.exe",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true
                 }
             };
 
             var cwd = Directory.GetCurrentDirectory();
             Directory.SetCurrentDirectory(programDataFolder);
 
-            epgDownloadProcess.Start();
-            epgDownloadProcess.WaitForExit();
+            using (var process = Process.Start(epgDownloadProcess.StartInfo))
+            {
+                using (var streamReader = process.StandardOutput)
+                {
+                    var output = streamReader.ReadToEnd();
+                    AppendTextToFile(string.Format("MC2XML Output: \n{0}", output));
+                }
+            }
 
             Directory.SetCurrentDirectory(cwd);
         }
@@ -55,7 +61,8 @@ namespace WMCDuplicateRemoverDriver
         private void ProcessDuplicates(List<ScheduledEvent> scheduledEvents, List<String> duplicateScheduledEvents)
         {
             var eventLogWrapper = new MicrosoftEventLogWrapper();
-            var tv = new TV(Path.Combine(programDataFolder, "xmltv.xml"));
+            var channelsWithScheduledEvents = scheduledEvents.Select(x => int.Parse(x.ChannelID)).Distinct();
+            var tv = new TV(Path.Combine(programDataFolder, "xmltv.xml"), channelsWithScheduledEvents);
 
             foreach (var scheduledEvent in scheduledEvents)
             {

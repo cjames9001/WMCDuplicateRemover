@@ -27,6 +27,28 @@ namespace WMCDuplicateRemover.Code.EPG
                 Listings = (Listing)serializer.Deserialize(reader);
             }
             fs.Close();
+
+            Listings.Programs = Listings.Programs.Where(x => x.Start >= DateTime.Now).ToList();
+        }
+
+        public TV(String EPGPath, IEnumerable<int> channelsScheduledForRecordings)
+        {
+            var fs = new FileStream(EPGPath, FileMode.Open);
+            XmlReaderSettings settings = new XmlReaderSettings()
+            {
+                XmlResolver = null,
+                ProhibitDtd = false
+            };
+
+            using (XmlReader reader = XmlReader.Create(fs, settings))
+            {
+                var serializer = new XmlSerializer(typeof(Listing));
+                Listings = (Listing)serializer.Deserialize(reader);
+            }
+            fs.Close();
+
+            var scheduledChannelIds = channelsScheduledForRecordings.Select(x => GetChannelFromNumber(x));
+            Listings.Programs = Listings.Programs.Where(x => x.Start >= DateTime.Now && scheduledChannelIds.Contains(x.ChannelID)).ToList();
         }
 
         [XmlType("tv"), Serializable]
