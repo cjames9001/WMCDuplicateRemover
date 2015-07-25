@@ -47,6 +47,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,6 +58,7 @@
     <Compile Include="Code\EPG\Episode.cs" />
     <Compile Include="Code\EPG\TV.cs" />
     <Compile Include="Code\EPG\TVChannel.cs" />
+    <Compile Include="Code\EPG\XtvdEpisode.cs" />
     <Compile Include="Code\Wrappers\EventLogEntryWrapper.cs" />
     <Compile Include="Code\Wrappers\EventLogWrapper.cs" />
     <Compile Include="Code\Wrappers\EventScheduleWrapper.cs" />
@@ -66,10 +68,19 @@
     <Compile Include="Code\Wrappers\ScheduledEvent.cs" />
     <Compile Include="Code\Wrappers\ScheduledEventWrapper.cs" />
     <Compile Include="Code\Wrappers\TheTVDBWrapper.cs" />
+    <Compile Include="Code\Wrappers\XtvdWrapper.cs" />
+    <Compile Include="Code\xtvdWebService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Code\Services\xtvdWebService.wsdl" />
+    <None Include="Code\xsd\tmsxg.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Code\xsd\tmsxtvd.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="WMCDuplicateRemoverKey.pfx" />

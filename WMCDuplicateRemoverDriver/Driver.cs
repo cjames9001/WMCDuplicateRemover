@@ -24,7 +24,7 @@ namespace WMCDuplicateRemoverDriver
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             AppendTextToFile("Updating EPG");
-            UpdateEPG();
+            //UpdateEPG();
             AppendTextToFile(String.Format("EPG Updated After {0}", stopwatch.Elapsed));
             ProcessDuplicates(scheduledEvents, duplicateScheduledEvents);
             stopwatch.Stop();
@@ -62,7 +62,7 @@ namespace WMCDuplicateRemoverDriver
         {
             var eventLogWrapper = new MicrosoftEventLogWrapper();
             var channelsWithScheduledEvents = scheduledEvents.Select(x => int.Parse(x.ChannelID)).Distinct();
-            var tv = new TV(Path.Combine(programDataFolder, "xmltv.xml"), channelsWithScheduledEvents);
+            var tv = new XtvdWrapper(channelsWithScheduledEvents);
 
             foreach (var scheduledEvent in scheduledEvents)
             {
