@@ -16,21 +16,21 @@ namespace WMCDuplicateRemover.Code.EPG
         public String EndString { get; set; }
 
         [XmlAttribute("channel")]
-        public String ChannelID { get; set; }
+        public virtual String ChannelID { get; set; }
 
         [XmlElement("title")]
-        public String SeriesName { get; set; }
+        public virtual String SeriesName { get; set; }
 
         [XmlElement("sub-title")]
-        public String EpisodeName { get; set; }
+        public virtual String EpisodeName { get; set; }
 
         [XmlElement("desc")]
-        public String Description { get; set; }
+        public virtual String Description { get; set; }
 
         [XmlElement("date")]
         public String OriginalAirDateString { get; set; }
 
-        public DateTime OriginalAirDate
+        public virtual DateTime OriginalAirDate
         {
             get
             {
@@ -38,7 +38,7 @@ namespace WMCDuplicateRemover.Code.EPG
             }
         }
 
-        public DateTime Start
+        public virtual DateTime Start
         {
             get
             {
@@ -46,7 +46,7 @@ namespace WMCDuplicateRemover.Code.EPG
             }
         }
 
-        public DateTime End
+        public virtual DateTime End
         {
             get
             {

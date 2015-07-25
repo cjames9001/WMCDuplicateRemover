@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using WMCDuplicateRemover.Code.EPG;
 
-namespace WMCDuplicateRemover.Code.EPG
+namespace WMCDuplicateRemover.Code.Wrappers
 {
-    public class TV
+    public class XmlTvEpgWrapper : EpgWrapper
     {
-        private Listing Listings { get; set; }
-
-        public TV(String EPGPath)
+        public XmlTvEpgWrapper(String EPGPath)
         {
             var fs = new FileStream(EPGPath, FileMode.Open);
             XmlReaderSettings settings = new XmlReaderSettings()
@@ -31,7 +30,7 @@ namespace WMCDuplicateRemover.Code.EPG
             Listings.Programs = Listings.Programs.Where(x => x.Start >= DateTime.Now).ToList();
         }
 
-        public TV(String EPGPath, IEnumerable<int> channelsScheduledForRecordings)
+        public XmlTvEpgWrapper(String EPGPath, IEnumerable<int> channelsScheduledForRecordings)
         {
             var fs = new FileStream(EPGPath, FileMode.Open);
             XmlReaderSettings settings = new XmlReaderSettings()
@@ -47,39 +46,14 @@ namespace WMCDuplicateRemover.Code.EPG
             }
             fs.Close();
 
-            var scheduledChannelIds = channelsScheduledForRecordings.Select(x => GetChannelFromNumber(x));
+            var scheduledChannelIds = channelsScheduledForRecordings.Select(x => GetEpgChannelFromNumber(x));
             Listings.Programs = Listings.Programs.Where(x => x.Start >= DateTime.Now && scheduledChannelIds.Contains(x.ChannelID)).ToList();
         }
 
-        [XmlType("tv"), Serializable]
-        public class Listing
-        {
-            [XmlElement("programme")]
-            public List<Episode> Programs { get; set; }
-
-            [XmlElement("channel")]
-            public List<TVChannel> Channels { get; set; }
-
-            
-        }
-
-        internal String GetChannelFromNumber(int channelNumber)
+        internal override String GetEpgChannelFromNumber(int channelNumber)
         {
             var tvChannel = Listings.Channels.FirstOrDefault(x => x.ChannelInfo[1] == channelNumber.ToString());
             return tvChannel.ChannelID;
-        }
-
-        public Episode GetEpisodeMetaDataBasedOnWMCMetaData(DateTime startTime, DateTime endTime, DateTime originalAirDate, int channelNumber)
-        {
-            var channelId = GetChannelFromNumber(channelNumber);
-            var possibleEpisodes = Listings.Programs.Where(x => (x.OriginalAirDate != DateTime.MinValue && x.ChannelID == channelId && x.Start == startTime && x.End == endTime && x.OriginalAirDate == originalAirDate)).ToList();
-
-            if (possibleEpisodes.Count > 1)
-                throw new InvalidOperationException("There can only be one episode, there must be something terribly wrong with the EPG Data. Certainty is not 100% and cannot continue");
-            if (possibleEpisodes.Count < 1)
-                throw new NullReferenceException("There are no episodes found for this listing");
-
-            return possibleEpisodes.First();
         }
     }
 }

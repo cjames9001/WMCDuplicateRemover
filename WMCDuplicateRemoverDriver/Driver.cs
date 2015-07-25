@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using WMCDuplicateRemover;
 using WMCDuplicateRemover.Code.EPG;
+using WMCDuplicateRemover.Code.Wrappers;
 
 namespace WMCDuplicateRemoverDriver
 {
@@ -25,8 +26,10 @@ namespace WMCDuplicateRemoverDriver
             stopwatch.Start();
             AppendTextToFile("Updating EPG");
             //UpdateEPG();
+            var channelsWithScheduledEvents = scheduledEvents.Select(x => int.Parse(x.ChannelID)).Distinct();
+            var epgWrapper = new SchedulesDirectEpgXTvdWrapper(channelsWithScheduledEvents);
             AppendTextToFile(String.Format("EPG Updated After {0}", stopwatch.Elapsed));
-            ProcessDuplicates(scheduledEvents, duplicateScheduledEvents);
+            ProcessDuplicates(scheduledEvents, duplicateScheduledEvents, epgWrapper);
             stopwatch.Stop();
             AppendTextToFile(String.Format("Finished Processing: {0}/{1} Cancelled in {2}\n", duplicateScheduledEvents.Count, scheduledEvents.Count, stopwatch.Elapsed));
         }
@@ -58,18 +61,16 @@ namespace WMCDuplicateRemoverDriver
             Directory.SetCurrentDirectory(cwd);
         }
 
-        private void ProcessDuplicates(List<ScheduledEvent> scheduledEvents, List<String> duplicateScheduledEvents)
+        private void ProcessDuplicates(List<ScheduledEvent> scheduledEvents, List<String> duplicateScheduledEvents, EpgWrapper epgWrapper)
         {
             var eventLogWrapper = new MicrosoftEventLogWrapper();
-            var channelsWithScheduledEvents = scheduledEvents.Select(x => int.Parse(x.ChannelID)).Distinct();
-            var tv = new XtvdWrapper(channelsWithScheduledEvents);
 
             foreach (var scheduledEvent in scheduledEvents)
             {
                 var episode = new Episode();
                 try
                 {
-                    episode = tv.GetEpisodeMetaDataBasedOnWMCMetaData(scheduledEvent.StartTime, scheduledEvent.EndTime, scheduledEvent.OriginalAirDate, Convert.ToInt32(scheduledEvent.ChannelID));
+                    episode = epgWrapper.GetEpisodeMetaDataBasedOnWMCMetaData(scheduledEvent.StartTime, scheduledEvent.EndTime, scheduledEvent.OriginalAirDate, Convert.ToInt32(scheduledEvent.ChannelID));
                     if (scheduledEvent.CanEventBeCancelled(eventLogWrapper, episode))
                     {
                         var scheduledEventText = String.Format("{0}State: {1}{2}Partial: {3}{2}Repeat: {4}{2}",

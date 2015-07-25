@@ -6,7 +6,7 @@ using System.Text;
 
 namespace WMCDuplicateRemover.Code.EPG
 {
-    class XtvdEpisode : Episode
+    public class XtvdEpisode : Episode
     {
         private schedulesSchedule _xtvdEpisodeSchedule;
         private programsProgram _xtvdEpisodeData;
@@ -17,7 +17,7 @@ namespace WMCDuplicateRemover.Code.EPG
             _xtvdEpisodeData = episodeData;
         }
 
-        public new String ChannelID
+        public override String ChannelID
         {
             get
             {
@@ -25,7 +25,7 @@ namespace WMCDuplicateRemover.Code.EPG
             }
         }
 
-        public new String SeriesName
+        public override String SeriesName
         {
             get
             {
@@ -33,7 +33,7 @@ namespace WMCDuplicateRemover.Code.EPG
             }
         }
 
-        public new String EpisodeName
+        public override String EpisodeName
         {
             get
             {
@@ -41,7 +41,7 @@ namespace WMCDuplicateRemover.Code.EPG
             }
         }
 
-        public new String Description
+        public override String Description
         {
             get
             {
@@ -49,7 +49,7 @@ namespace WMCDuplicateRemover.Code.EPG
             }
         }
 
-        public new DateTime OriginalAirDate
+        public override DateTime OriginalAirDate
         {
             get
             {
@@ -57,71 +57,21 @@ namespace WMCDuplicateRemover.Code.EPG
             }
         }
 
-        public new DateTime Start
+        public override DateTime Start
         {
             get
             {
-                return _xtvdEpisodeSchedule.time;
+                return _xtvdEpisodeSchedule.time.ToLocalTime();
             }
         }
 
-        public new DateTime End
+        public override DateTime End
         {
             get
             {
                 string duration = _xtvdEpisodeSchedule.duration;
-                return Start.Add(new TimeSpan(int.Parse(duration.Substring(2, 2)), int.Parse(duration.Substring(5, 2)), 2));
+                return Start.Add(new TimeSpan(int.Parse(duration.Substring(2, 2)), int.Parse(duration.Substring(5, 2)), 0));
             }
         }
-
-        #region Object overrides
-
-        public override bool Equals(object obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-                return false;
-
-            foreach (PropertyInfo propertyInfo in this.GetType().GetProperties())
-            {
-                if (propertyInfo.CanRead)
-                {
-                    var thisProperty = propertyInfo.GetValue(this, null);
-                    var passedProperty = propertyInfo.GetValue(obj, null);
-
-                    if (!object.Equals(thisProperty, passedProperty))
-                        return false;
-                }
-            }
-
-            return true;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            try
-            {
-                return String.Format("{1}: {2}{0}Scheduled For: {3}{0}Description: {4}{0}ChannelID: {5}{0}Original Air Date: {6}{0}{7}.{8}{0}",
-                    Environment.NewLine,
-                    SeriesName,
-                    EpisodeName,
-                    Start,
-                    Description,
-                    ChannelID,
-                    OriginalAirDate,
-                    this.GetType().Namespace,
-                    this.GetType().Name);
-            }
-            catch (Exception ex)
-            {
-                return "UnableTo-Tostring()!" + ex.Message + ex.StackTrace;
-            }
-        }
-
-        #endregion
     }
 }

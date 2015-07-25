@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using WMCDuplicateRemover.Code.EPG;
+using System.Xml.Serialization;
+
+namespace WMCDuplicateRemover.Code.Wrappers
+{
+    public abstract class EpgWrapper
+    {
+        protected Listing Listings { get; set; }
+
+        [XmlType("tv"), Serializable]
+        public class Listing
+        {
+            [XmlElement("programme")]
+            public List<Episode> Programs { get; set; }
+
+            [XmlElement("channel")]
+            public List<TVChannel> Channels { get; set; }
+        }
+
+        public Episode GetEpisodeMetaDataBasedOnWMCMetaData(DateTime startTime, DateTime endTime, DateTime originalAirDate, int channelNumber)
+        {
+            var channelId = GetEpgChannelFromNumber(channelNumber);
+            var possibleEpisodes = Listings.Programs.Where(x => (x.OriginalAirDate != DateTime.MinValue && x.ChannelID == channelId && x.Start == startTime && x.End == endTime && x.OriginalAirDate == originalAirDate)).ToList();
+
+            if (possibleEpisodes.Count > 1)
+                throw new InvalidOperationException("There can only be one episode, there must be something terribly wrong with the EPG Data. Certainty is not 100% and cannot continue");
+            if (possibleEpisodes.Count < 1)
+                throw new NullReferenceException("There are no episodes found for this listing");
+
+            return possibleEpisodes.First();
+        }
+
+        internal abstract string GetEpgChannelFromNumber(int channelNumber);
+    }
+}

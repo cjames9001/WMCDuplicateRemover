@@ -56,7 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\EPG\Episode.cs" />
-    <Compile Include="Code\EPG\TV.cs" />
+    <Compile Include="Code\Wrappers\EpgWrapper.cs" />
+    <Compile Include="Code\Wrappers\XmlTvEpgWrapper.cs" />
     <Compile Include="Code\EPG\TVChannel.cs" />
     <Compile Include="Code\EPG\XtvdEpisode.cs" />
     <Compile Include="Code\Wrappers\EventLogEntryWrapper.cs" />
@@ -68,7 +69,7 @@
     <Compile Include="Code\Wrappers\ScheduledEvent.cs" />
     <Compile Include="Code\Wrappers\ScheduledEventWrapper.cs" />
     <Compile Include="Code\Wrappers\TheTVDBWrapper.cs" />
-    <Compile Include="Code\Wrappers\XtvdWrapper.cs" />
+    <Compile Include="Code\Wrappers\SchedulesDirectEpgXTvdWrapper.cs" />
     <Compile Include="Code\xtvdWebService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
