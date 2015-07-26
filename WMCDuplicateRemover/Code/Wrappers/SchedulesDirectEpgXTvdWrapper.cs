@@ -26,7 +26,7 @@ namespace WMCDuplicateRemover.Code.Wrappers
             xtvdWebService xtvd = new xtvdWebService();
             System.Net.NetworkCredential cred = new System.Net.NetworkCredential("cjames9001", "skyloo100");
             xtvd.Credentials = cred;
-            return xtvd.download(DateTime.Now.ToString(@"yyyy-MM-ddT00:00:00Z"), DateTime.Now.AddDays(7).ToString(@"yyyy-MM-ddT00:00:00Z")).xtvd;
+            return xtvd.download(DateTime.Now.ToString(@"yyyy-MM-ddT00:00:00Z"), DateTime.Now.AddDays(14).ToString(@"yyyy-MM-ddT00:00:00Z")).xtvd;
         }
 
         private List<Episode> GetEpisodes(xtvd epgDataFromService)

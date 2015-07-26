@@ -21,7 +21,7 @@ namespace WMCDuplicateRemover
             {
                 var entryWrapper = new EventLogEntryWrapper(entry.Message, entry.Source, entry.InstanceId);
                 if (entryWrapper.IsValidRecordingEntry)
-                    eventLogCache.Add(entryWrapper.RecordingName.Trim().ToLower());
+                    eventLogCache.Add(CleanRecordingName(entryWrapper.RecordingName));
             }
 
             eventLogCache.UnionWith(eventLogEntries);
@@ -33,9 +33,14 @@ namespace WMCDuplicateRemover
             if (String.IsNullOrEmpty(seriesName) || String.IsNullOrEmpty(episodeName))
                 return false;
 
-            var formattedEventData = String.Format("{0}: {1}", seriesName, episodeName).Trim().ToLower();
+            var formattedEventData = CleanRecordingName(String.Format("{0}: {1}", seriesName, episodeName));
 
             return eventLogCache.Contains(formattedEventData);
+        }
+
+        private String CleanRecordingName(String recordingName)
+        {
+            return recordingName.Replace("'", String.Empty).Trim().ToLower();
         }
     }
 }
