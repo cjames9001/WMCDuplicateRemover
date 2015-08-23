@@ -21,11 +21,16 @@ namespace WMCDuplicateRemover.Code.Wrappers
             public List<TVChannel> Channels { get; set; }
         }
 
+        private bool DateTimeWithinFiveMinutes(DateTime firstDate, DateTime secondDate)
+        {
+            return (secondDate.AddMinutes(-5) < firstDate && firstDate < secondDate.AddMinutes(5));
+        }
+
         public Episode GetEpisodeMetaDataBasedOnWMCMetaData(DateTime startTime, DateTime endTime, DateTime originalAirDate, int channelNumber)
         {
             var channelId = GetEpgChannelFromNumber(channelNumber);
-            var possibleEpisodes = Listings.Programs.Where(x => (x.OriginalAirDate != DateTime.MinValue && x.ChannelID == channelId && x.Start == startTime && x.End == endTime && x.OriginalAirDate == originalAirDate)).ToList();
-
+            var possibleEpisodes = Listings.Programs.Where(x => /*(x.OriginalAirDate != DateTime.MinValue &&*/(x.ChannelID == channelId && DateTimeWithinFiveMinutes(x.Start, startTime) && DateTimeWithinFiveMinutes(x.End, endTime)/* && x.OriginalAirDate == originalAirDate*/)).ToList();
+            
             if (possibleEpisodes.Count > 1)
                 throw new InvalidOperationException("There can only be one episode, there must be something terribly wrong with the EPG Data. Certainty is not 100% and cannot continue");
             if (possibleEpisodes.Count < 1)

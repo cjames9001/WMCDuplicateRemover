@@ -52,7 +52,7 @@ namespace WMCDuplicateRemover
 
         public bool CanEventBeCancelled(EventLogWrapper entryWrapper, Episode episode)
         {
-            bool canEventBeCancelled = WMCMetaDataAllowsForCancellation() && EventLogInformationAllowsForCancellation(entryWrapper, episode);
+            bool canEventBeCancelled = episode.MetaDataAllowsForCancellation() && EventLogInformationAllowsForCancellation(entryWrapper, episode);
             EpisodeTitle = episode.EpisodeName;
             return canEventBeCancelled;
         }

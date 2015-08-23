@@ -72,6 +72,15 @@ namespace WMCDuplicateRemover.Code.EPG
             }
         }
 
+        public bool MetaDataAllowsForCancellation()
+        {
+            if (OriginalAirDate.Date == DateTime.MinValue.Date || OriginalAirDate.Date == DateTime.Now.Date)
+                return false;
+            if (OriginalAirDate < DateTime.Now)
+                return true;
+            return false;
+        }
+
         #region Object overrides
 
         public override bool Equals(object obj)
