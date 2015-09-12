@@ -33,6 +33,12 @@ namespace WMCDuplicateRemover
             if (String.IsNullOrEmpty(seriesName) || String.IsNullOrEmpty(episodeName))
                 return false;
 
+            //These are exceptions since I had to go and delete off these because WMC screwed up its DRM and I wasn't actually
+            //finished watching these
+            //TODO: Add the ability to add exceptions to this program without hard coding here
+            if (seriesName.ToLower() == "True Detective".ToLower() || seriesName.ToLower() == "Silicon Valley".ToLower())
+                return false;
+
             var formattedEventData = CleanRecordingName(String.Format("{0}: {1}", seriesName, episodeName));
 
             return eventLogCache.Contains(formattedEventData);
