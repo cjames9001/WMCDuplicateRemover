@@ -13,7 +13,7 @@ namespace WMCDuplicateRemoverDriver
     public class Driver
     {
         private static String programDataFolder = String.Format("{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "WMCDuplicateRemover");
-        private readonly string logPath = Path.Combine(programDataFolder, "WMCDuplicateRemoverTesting.log");
+        private readonly string logPath = Path.Combine(programDataFolder, "WMCDuplicateRemover.log");
 
         public void Run()
         {
