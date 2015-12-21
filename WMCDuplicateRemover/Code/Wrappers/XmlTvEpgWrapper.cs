@@ -53,7 +53,7 @@ namespace WMCDuplicateRemover.Code.Wrappers
         internal override String GetEpgChannelFromNumber(int channelNumber)
         {
             var tvChannel = Listings.Channels.FirstOrDefault(x => x.ChannelInfo[1] == channelNumber.ToString());
-            return tvChannel.ChannelID;
+            return tvChannel == null ? "" : tvChannel.ChannelID;
         }
     }
 }
