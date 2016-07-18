@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using WMCDuplicateRemover.Code.EPG;
 
 namespace WMCDuplicateRemover.Code.Wrappers
 {
     public class XmlTvEpgWrapper : EpgWrapper
     {
-        public XmlTvEpgWrapper(String EPGPath)
+        public XmlTvEpgWrapper(string epgPath, IDateTime currentDateTime)
         {
-            var fs = new FileStream(EPGPath, FileMode.Open);
+            var fs = new FileStream(epgPath, FileMode.Open);
             XmlReaderSettings settings = new XmlReaderSettings()
             {
                 XmlResolver = null,
@@ -27,7 +25,7 @@ namespace WMCDuplicateRemover.Code.Wrappers
             }
             fs.Close();
 
-            Listings.Programs = Listings.Programs.Where(x => x.Start >= DateTime.Now).ToList();
+            Listings.Programs = Listings.Programs.Where(x => x.Start >= currentDateTime.Now()).ToList();
         }
 
         public XmlTvEpgWrapper(String EPGPath, IEnumerable<int> channelsScheduledForRecordings)

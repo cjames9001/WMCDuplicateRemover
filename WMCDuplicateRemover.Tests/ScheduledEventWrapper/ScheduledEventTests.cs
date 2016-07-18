@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using NUnit.Framework;
 using Microsoft.MediaCenter.TV.Scheduling;
+using Moq;
 
 namespace WMCDuplicateRemover.Tests
 {
@@ -35,7 +34,7 @@ namespace WMCDuplicateRemover.Tests
                 new DateTime(2015, 4, 19, 7, 0, 0), 
                 false, 
                 new DateTime(2015, 4, 19, 7, 0, 0), 
-                Microsoft.MediaCenter.TV.Scheduling.ScheduleEventStates.WillOccur);
+                ScheduleEventStates.WillOccur);
         }
 
         [Test]
@@ -64,7 +63,9 @@ namespace WMCDuplicateRemover.Tests
             //TODO: Don't be lazy and put this here, it really muddies the intent...
             metaDataWrapper.seriesIdCache = new Dictionary<string, string>() { { "the simpsons", "71663" }, { "forensic files", "71415" }, { "last week tonight", "278518" }, { "blahblahblah", "4568" } };
 
-            return scheduledEvent.CanEventBeCancelled(new MockEventLogWrapper(), metaDataWrapper);
+            var mockEventLogWrapper = new Mock<EventLogWrapper>();
+            mockEventLogWrapper.Setup(x => x.FoundEventForRecording(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
+            return scheduledEvent.CanEventBeCancelled(mockEventLogWrapper.Object, metaDataWrapper);
         }
     }
 }

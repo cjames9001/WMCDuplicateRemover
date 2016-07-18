@@ -1,9 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using WMCDuplicateRemover.Code.EPG;
 
 namespace WMCDuplicateRemover.Tests.EPG
@@ -54,7 +51,7 @@ namespace WMCDuplicateRemover.Tests.EPG
                 .SetDescription("Checks 3PM Episode of two and a half men")
                 .SetName("TestGetTwoAndAHalfMenEpisode");
 
-            yield return new TestCaseData(new DateTime(2015, 5, 1, 15, 30, 0), new DateTime(2015, 5, 1, 16, 0, 0), new DateTime(2005, 03, 20), 631)
+            yield return new TestCaseData(new DateTime(2015, 5, 15, 15, 30, 0), new DateTime(2015, 5, 15, 16, 0, 0), new DateTime(2005, 03, 20), 631)
                 .Throws(typeof(NullReferenceException))
                 .SetDescription("Checks null reference exception is thrown when there isn't anything as listed")
                 .SetName("TestCatchNullReferenceException");

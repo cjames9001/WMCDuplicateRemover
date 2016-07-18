@@ -1,8 +1,6 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using WMCDuplicateRemover.Code.EPG;
 using WMCDuplicateRemover.Code.Wrappers;
 
@@ -16,7 +14,9 @@ namespace WMCDuplicateRemover.Tests.EPG
         [TestFixtureSetUp]
         public void SetUp()
         {
-            tv = new XmlTvEpgWrapper(@"..\..\EPG\TestData\EPG.xml");
+            var dateTimeMock = new Mock<IDateTime>();
+            dateTimeMock.Setup(x => x.Now()).Returns(new DateTime(2015, 04, 20));
+            tv = new XmlTvEpgWrapper(@"..\..\EPG\TestData\EPG.xml", dateTimeMock.Object);
         }
 
         [TestCaseSource(typeof(TVChannelTestCases))]
