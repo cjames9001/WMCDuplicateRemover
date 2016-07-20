@@ -68,11 +68,9 @@
     <Compile Include="Code\Wrappers\EventLogWrapper.cs" />
     <Compile Include="Code\Wrappers\EventScheduleWrapper.cs" />
     <Compile Include="Code\Wrappers\IEventSchedule.cs" />
-    <Compile Include="Code\Wrappers\MetaDataWrapper.cs" />
     <Compile Include="Code\Wrappers\MicrosoftEventLogWrapper.cs" />
     <Compile Include="Code\Wrappers\ScheduledEvent.cs" />
     <Compile Include="Code\Wrappers\ScheduledEventWrapper.cs" />
-    <Compile Include="Code\Wrappers\TheTVDBWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

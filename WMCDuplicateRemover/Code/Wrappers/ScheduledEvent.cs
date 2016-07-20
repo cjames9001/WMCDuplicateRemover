@@ -25,12 +25,7 @@ namespace WMCDuplicateRemover
         public String EpisodeTitle { get; private set; }
 
         public abstract void CancelEvent();
-
-        internal bool EventLogInformationAllowsForCancellation(EventLogWrapper entryWrapper, MetaDataWrapper metaDataWrapper)
-        {
-            return entryWrapper.FoundEventForRecording(metaDataWrapper.SeriesName, metaDataWrapper.GetEpisodeTitleFromOriginalAirDate());
-        }
-
+        
         internal bool WMCMetaDataAllowsForCancellation()
         {
             if (OriginalAirDate.Date == DateTime.MinValue.Date || OriginalAirDate.Date == DateTime.Now.Date)
@@ -38,13 +33,6 @@ namespace WMCDuplicateRemover
             if (Repeat && OriginalAirDate < DateTime.Now)
                 return true;
             return false;
-        }
-
-        public bool CanEventBeCancelled(EventLogWrapper entryWrapper, MetaDataWrapper metaDataWrapper)
-        {
-            bool canEventBeCancelled = WMCMetaDataAllowsForCancellation() && EventLogInformationAllowsForCancellation(entryWrapper, metaDataWrapper);
-            EpisodeTitle = metaDataWrapper.EpisodeTitle;
-            return canEventBeCancelled;
         }
 
         public bool CanEventBeCancelled(EventLogWrapper entryWrapper, Episode episode)
