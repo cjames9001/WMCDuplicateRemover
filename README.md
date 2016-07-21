@@ -1,8 +1,6 @@
 # WMCDuplicateRemover
 An application that removes recordings that Windows Media Center has previously recorded.
 
-[![Build status](https://ci.appveyor.com/api/projects/status/o69xhds5akiu7tgv?svg=true)](https://ci.appveyor.com/project/cjames9001/wmcduplicateremover)
-
 There's quite a bit of unused code that I need to go in and delete.
 
 The gist of it is though it uses http://mc2xml.hosterbox.net/ to get an Electronic Programming Guide (EPG) from a source.
