@@ -14,35 +14,30 @@ namespace WMCDuplicateRemover
         {
             _scheduledEvent = scheduledEvent;
         }
-
-        public ScheduledEventWrapper()
-        {
-            // TODO: Complete member initialization
-        }
-
+    
         #endregion
 
         #region Properties
 
-        private String _title;
-        public override String Title
+        private string _title;
+        public override string Title
         { 
             get 
             {
                 try
                 {
-                    if (String.IsNullOrEmpty(_title))
+                    if (string.IsNullOrWhiteSpace(_title))
                         _title = _scheduledEvent.GetExtendedProperty("Title").ToString();
                     return _title;
                 }
                 catch(NullReferenceException)
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
         }
-
-        public override String ServiceID
+        
+        public override string ServiceId
         {
             get
             {
@@ -52,12 +47,12 @@ namespace WMCDuplicateRemover
                 }
                 catch(NullReferenceException)
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
         }
 
-        public override String ChannelID
+        public override string ChannelId
         {
             get
             {
@@ -67,25 +62,25 @@ namespace WMCDuplicateRemover
                 }
                 catch(NullReferenceException)
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
         }
 
         private string _description;
-        public override String Description
+        public override string Description
         {
             get
             {
                 try
                 {
-                    if (String.IsNullOrEmpty(_description))
+                    if (string.IsNullOrEmpty(_description))
                         _description = _scheduledEvent.GetExtendedProperty("Description").ToString();
                     return _description;
                 }
                 catch(NullReferenceException)
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
         }
@@ -135,7 +130,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public override String ProviderCopyright
+        public override string ProviderCopyright
         {
             get
             {
@@ -145,7 +140,7 @@ namespace WMCDuplicateRemover
                 }
                 catch(NullReferenceException)
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
         }
@@ -180,7 +175,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public override String Genre
+        public override string Genre
         {
             get
             {
@@ -190,12 +185,12 @@ namespace WMCDuplicateRemover
                 }
                 catch(NullReferenceException)
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
         }
 
-        public override String FileName
+        public override string FileName
         {
             get
             {
@@ -205,7 +200,7 @@ namespace WMCDuplicateRemover
                 }
                 catch(NullReferenceException)
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
         }
@@ -260,39 +255,6 @@ namespace WMCDuplicateRemover
         public override void CancelEvent()
         {
             _scheduledEvent.Cancel();
-        }
-
-        public override string ToString()
-        {
-            try
-            {
-                return String.Format("{0}.{1}{2}Series Title: {3}{2}Episode Title: {4}{2}Description: {5}{2}ServiceID: {6}{2}ChannelID: {7}{2}" +
-                    "Keep Until: {8}{2}Quality: {9}{2}Partial: {10}{2}Provider Copyright: {11}{2}Original Air Date: {12}{2}Repeat: {13}{2}Genre: {14}{2}" +
-                    "File Name: {15}{2}Start Time: {16}{2}End Time: {17}{2}State: {18}{2}",
-                    this.GetType().Namespace,
-                    this.GetType().Name,
-                    Environment.NewLine,
-                    Title,
-                    EpisodeTitle,
-                    Description,
-                    ServiceID,
-                    ChannelID,
-                    KeepUntil,
-                    Quality,
-                    Partial,
-                    ProviderCopyright,
-                    OriginalAirDate,
-                    Repeat,
-                    Genre,
-                    FileName,
-                    StartTime,
-                    EndTime,
-                    State);
-            }
-            catch (Exception ex)
-            {
-                return "UnableTo-Tostring()!" + ex.Message + ex.StackTrace;
-            }
         }
     }
 }

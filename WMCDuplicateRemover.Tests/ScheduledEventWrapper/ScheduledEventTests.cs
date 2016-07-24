@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using NUnit.Framework;
 using Microsoft.MediaCenter.TV.Scheduling;
-using Moq;
 
-namespace WMCDuplicateRemover.Tests
+namespace WMCDuplicateRemover.Tests.ScheduledEventWrapper
 {
     [TestFixture]
     public class ScheduledEventTests
@@ -49,11 +47,10 @@ namespace WMCDuplicateRemover.Tests
             Assert.AreEqual(ScheduleEventStates.WillOccur, _scheduledEvent.State);
         }
 
-        [Test]
-        public void TestScheduledEventToString()
+        [TestCaseSource(typeof(ScheduledEventTestScheduledEventToStringTests))]
+        public void TestScheduledEventToString(ScheduledEvent scheduledEvent, string expectedString)
         {
-            //TODO: Make this a real test
-            Assert.AreNotEqual("", new ScheduledEventWrapper().ToString());
+            Assert.AreEqual(expectedString, scheduledEvent.ToString());
         }
     }
 }

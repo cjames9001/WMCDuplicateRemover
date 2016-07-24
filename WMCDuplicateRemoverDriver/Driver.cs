@@ -25,7 +25,7 @@ namespace WMCDuplicateRemoverDriver
             stopwatch.Start();
             AppendTextToFile("Updating EPG");
             UpdateEPG();
-            var channelsWithScheduledEvents = scheduledEvents.Select(x => int.Parse(x.ChannelID)).Distinct();
+            var channelsWithScheduledEvents = scheduledEvents.Select(x => int.Parse(x.ChannelId)).Distinct();
             var epgWrapper = new XmlTvEpgWrapper(Path.Combine(programDataFolder, "xmltv.xml"), channelsWithScheduledEvents);
             AppendTextToFile(String.Format("EPG Updated After {0}", stopwatch.Elapsed));
             ProcessDuplicates(scheduledEvents, duplicateScheduledEvents, epgWrapper);
@@ -69,7 +69,7 @@ namespace WMCDuplicateRemoverDriver
                 var episode = new Episode();
                 try
                 {
-                    episode = epgWrapper.GetEpisodeMetaDataBasedOnWMCMetaData(scheduledEvent.StartTime, scheduledEvent.EndTime, scheduledEvent.OriginalAirDate, Convert.ToInt32(scheduledEvent.ChannelID));
+                    episode = epgWrapper.GetEpisodeMetaDataBasedOnWMCMetaData(scheduledEvent.StartTime, scheduledEvent.EndTime, scheduledEvent.OriginalAirDate, Convert.ToInt32(scheduledEvent.ChannelId));
                     if (scheduledEvent.CanEventBeCancelled(eventLogWrapper, episode))
                     {
                         var scheduledEventText = String.Format("{0}State: {1}{2}Partial: {3}{2}Repeat: {4}{2}",
