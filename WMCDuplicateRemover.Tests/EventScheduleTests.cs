@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using NUnit.Framework;
 using Microsoft.MediaCenter.TV.Scheduling;
+using Moq;
 
 namespace WMCDuplicateRemover.Tests
 {
-    [Ignore]
+    [Ignore("Because they wont run? I don't remember but I'll revisit later")]
     [TestFixture]
     public class EventScheduleTests
     {
@@ -17,7 +16,8 @@ namespace WMCDuplicateRemover.Tests
         [SetUp]
         public void SetUp()
         {
-            _eventSchedule = new MockEventSchedule(
+            var mockEventSchedule = new Mock<IEventSchedule>();
+            mockEventSchedule.Setup(x => x.GetEventsScheduledToRecord()).Returns(
                 new List<ScheduledEvent>
                 {
                     new MockScheduledEvent(
@@ -27,7 +27,7 @@ namespace WMCDuplicateRemover.Tests
                         new DateTime(2015, 3, 23, 10, 0, 0), 
                         false, 
                         new DateTime(2015, 3, 23, 10, 0, 0), 
-                        Microsoft.MediaCenter.TV.Scheduling.ScheduleEventStates.WillOccur),
+                        ScheduleEventStates.WillOccur),
                     new MockScheduledEvent(
                         "The Daily Show", 
                         "Jon Stewart Discusses Current Events", 
@@ -134,6 +134,7 @@ namespace WMCDuplicateRemover.Tests
                         ScheduleEventStates.WillOccur)
                 }
                 );
+            _eventSchedule = mockEventSchedule.Object;
         }
     }
 }

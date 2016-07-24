@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace WMCDuplicateRemover
 {
@@ -36,8 +34,8 @@ namespace WMCDuplicateRemover
             //These are exceptions since I had to go and delete off these because WMC screwed up its DRM and I wasn't actually
             //finished watching these
             //TODO: Add the ability to add exceptions to this program without hard coding here
-            if (seriesName.ToLower() == "True Detective".ToLower() || seriesName.ToLower() == "Silicon Valley".ToLower())
-                return false;
+            //if (seriesName.ToLower() == "True Detective".ToLower() || seriesName.ToLower() == "Silicon Valley".ToLower())
+            //    return false;
 
             var formattedEventData = CleanRecordingName(String.Format("{0}: {1}", seriesName, episodeName));
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using WMCDuplicateRemover;
 using WMCDuplicateRemover.Code.EPG;
 using WMCDuplicateRemover.Code.Wrappers;

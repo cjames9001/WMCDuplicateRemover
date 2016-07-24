@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WMCDuplicateRemover.Tests</RootNamespace>
     <AssemblyName>WMCDuplicateRemover.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -37,11 +39,20 @@
     <AssemblyOriginatorKeyFile>WMCDuplicateRemoverKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ehRecObj">
       <HintPath>..\..\..\..\..\..\..\Windows\ehome\ehRecObj.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
+    <Reference Include="Moq, Version=4.5.13.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.5.13\lib\net45\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,13 +73,11 @@
     <Compile Include="MetaDataWrapper\GetEpisodeTitleFromOriginalAirDateTests.cs" />
     <Compile Include="MetaDataWrapper\MetaDataWrapperIntegrationTests.cs" />
     <Compile Include="MetaDataWrapper\MockMetaDataWrapper.cs" />
-    <Compile Include="MockEventLogWrapper.cs" />
     <Compile Include="ScheduledEventWrapper\ScheduledEventCancellationIntegrationTests.cs" />
     <Compile Include="ScheduledEventWrapper\ScheduledEventIntegrationTests.cs" />
     <Compile Include="SetupHelper.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="MetaDataWrapper\MetaDataWrapperTests.cs" />
-    <Compile Include="MockEventSchedule.cs" />
     <Compile Include="ScheduledEventWrapper\MockScheduledEvent.cs" />
     <Compile Include="ScheduledEventWrapper\ScheduledEventCancellationTests.cs" />
     <Compile Include="ScheduledEventWrapper\ScheduledEventTests.cs" />
