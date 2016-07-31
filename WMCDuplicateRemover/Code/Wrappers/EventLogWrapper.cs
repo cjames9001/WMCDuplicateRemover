@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace WMCDuplicateRemover
+﻿namespace WMCDuplicateRemover
 {
     public abstract class EventLogWrapper
     {
-        public abstract bool FoundEventForRecording(String seriesName, String episodeName);
+        public abstract bool FoundEventForRecording(string seriesName, string episodeName);
     }
 }

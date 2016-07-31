@@ -7,7 +7,6 @@ using Moq;
 
 namespace WMCDuplicateRemover.Tests
 {
-    [Ignore("Because they wont run? I don't remember but I'll revisit later")]
     [TestFixture]
     public class EventScheduleTests
     {

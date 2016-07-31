@@ -69,6 +69,7 @@
     <Compile Include="EPG\TVEpisodeTestCases.cs" />
     <Compile Include="EventScheduleTests.cs" />
     <Compile Include="ScheduledEventWrapper\ScheduledEventCancellationIntegrationTests.cs" />
+    <Compile Include="ScheduledEventWrapper\ScheduledEventTestsCanEventBeCancelledTests.cs" />
     <Compile Include="ScheduledEventWrapper\ScheduledEventTestScheduledEventToStringTests.cs" />
     <Compile Include="SetupHelper.cs" />
     <Compile Include="TestData.cs" />

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using System.Xml.Serialization;
 
 namespace WMCDuplicateRemover.Code.EPG
@@ -7,25 +6,25 @@ namespace WMCDuplicateRemover.Code.EPG
     public class Episode
     {
         [XmlAttribute("start")]
-        public String StartString { get; set; }
+        public string StartString { get; set; }
 
         [XmlAttribute("stop")]
-        public String EndString { get; set; }
+        public string EndString { get; set; }
 
         [XmlAttribute("channel")]
-        public virtual String ChannelID { get; set; }
+        public virtual string ChannelId { get; set; }
 
         [XmlElement("title")]
-        public virtual String SeriesName { get; set; }
+        public virtual string SeriesName { get; set; }
 
         [XmlElement("sub-title")]
-        public virtual String EpisodeName { get; set; }
+        public virtual string EpisodeName { get; set; }
 
         [XmlElement("desc")]
-        public virtual String Description { get; set; }
+        public virtual string Description { get; set; }
 
         [XmlElement("date")]
-        public String OriginalAirDateString { get; set; }
+        public string OriginalAirDateString { get; set; }
 
         public virtual DateTime OriginalAirDate
         {
@@ -51,7 +50,7 @@ namespace WMCDuplicateRemover.Code.EPG
             }
         }
 
-        private DateTime GetDateFromDateString(String timeString)
+        private DateTime GetDateFromDateString(string timeString)
         {
             try
             {
@@ -85,14 +84,14 @@ namespace WMCDuplicateRemover.Code.EPG
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
-            foreach (PropertyInfo propertyInfo in this.GetType().GetProperties())
+            foreach (var propertyInfo in GetType().GetProperties())
             {
                 if (propertyInfo.CanRead)
                 {
                     var thisProperty = propertyInfo.GetValue(this, null);
                     var passedProperty = propertyInfo.GetValue(obj, null);
 
-                    if (!object.Equals(thisProperty, passedProperty))
+                    if (!Equals(thisProperty, passedProperty))
                         return false;
                 }
             }
@@ -109,16 +108,7 @@ namespace WMCDuplicateRemover.Code.EPG
         {
             try
             {
-                return String.Format("{1}: {2}{0}Scheduled For: {3}{0}Description: {4}{0}ChannelID: {5}{0}Original Air Date: {6}{0}{7}.{8}{0}",
-                    Environment.NewLine,
-                    SeriesName,
-                    EpisodeName,
-                    Start,
-                    Description,
-                    ChannelID,
-                    OriginalAirDate,
-                    this.GetType().Namespace,
-                    this.GetType().Name);
+                return $"{SeriesName}: {EpisodeName}{Environment.NewLine}Scheduled For: {Start}{Environment.NewLine}Description: {Description}{Environment.NewLine}ChannelID: {ChannelId}{Environment.NewLine}Original Air Date: {OriginalAirDate}{Environment.NewLine}{GetType().Namespace}.{GetType().Name}{Environment.NewLine}";
             }
             catch (Exception ex)
             {

@@ -11,26 +11,26 @@ namespace WMCDuplicateRemoverDriver
 {
     public class Driver
     {
-        private static String programDataFolder = String.Format("{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "WMCDuplicateRemover");
+        private static string programDataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\WMCDuplicateRemover";
         private readonly string logPath = Path.Combine(programDataFolder, "WMCDuplicateRemover.log");
 
         public void Run()
         {
             AppendTextToFile("Begin Processing");
             var eventScheduler = new EventScheduleWrapper();
-            var scheduledEvents = eventScheduler.GetEventsScheduledToRecord();
+            var scheduledEvents = eventScheduler.GetEventsScheduledToRecord().ToList();
             scheduledEvents.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
-            List<String> duplicateScheduledEvents = new List<String>();
+            List<string> duplicateScheduledEvents = new List<string>();
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             AppendTextToFile("Updating EPG");
             UpdateEPG();
             var channelsWithScheduledEvents = scheduledEvents.Select(x => int.Parse(x.ChannelId)).Distinct();
             var epgWrapper = new XmlTvEpgWrapper(Path.Combine(programDataFolder, "xmltv.xml"), channelsWithScheduledEvents);
-            AppendTextToFile(String.Format("EPG Updated After {0}", stopwatch.Elapsed));
+            AppendTextToFile($"EPG Updated After {stopwatch.Elapsed}");
             ProcessDuplicates(scheduledEvents, duplicateScheduledEvents, epgWrapper);
             stopwatch.Stop();
-            AppendTextToFile(String.Format("Finished Processing: {0}/{1} Cancelled in {2}\n", duplicateScheduledEvents.Count, scheduledEvents.Count, stopwatch.Elapsed));
+            AppendTextToFile($"Finished Processing: {duplicateScheduledEvents.Count}/{scheduledEvents.Count} Cancelled in {stopwatch.Elapsed}\n");
         }
 
         private void UpdateEPG()
@@ -53,14 +53,14 @@ namespace WMCDuplicateRemoverDriver
                 using (var streamReader = process.StandardOutput)
                 {
                     var output = streamReader.ReadToEnd();
-                    AppendTextToFile(string.Format("MC2XML Output: \n{0}", output));
+                    AppendTextToFile($"MC2XML Output: \n{output}");
                 }
             }
 
             Directory.SetCurrentDirectory(cwd);
         }
 
-        private void ProcessDuplicates(List<ScheduledEvent> scheduledEvents, List<String> duplicateScheduledEvents, EpgWrapper epgWrapper)
+        private void ProcessDuplicates(List<ScheduledEvent> scheduledEvents, List<string> duplicateScheduledEvents, EpgWrapper epgWrapper)
         {
             var eventLogWrapper = new MicrosoftEventLogWrapper();
 
@@ -72,12 +72,7 @@ namespace WMCDuplicateRemoverDriver
                     episode = epgWrapper.GetEpisodeMetaDataBasedOnWMCMetaData(scheduledEvent.StartTime, scheduledEvent.EndTime, scheduledEvent.OriginalAirDate, Convert.ToInt32(scheduledEvent.ChannelId));
                     if (scheduledEvent.CanEventBeCancelled(eventLogWrapper, episode))
                     {
-                        var scheduledEventText = String.Format("{0}State: {1}{2}Partial: {3}{2}Repeat: {4}{2}",
-                            episode.ToString(),
-                            scheduledEvent.State,
-                            Environment.NewLine,
-                            scheduledEvent.Partial.ToString(),
-                            scheduledEvent.Repeat.ToString());
+                        var scheduledEventText = $"{episode.ToString()}State: {scheduledEvent.State}{Environment.NewLine}Partial: {scheduledEvent.Partial.ToString()}{Environment.NewLine}Repeat: {scheduledEvent.Repeat.ToString()}{Environment.NewLine}";
 
                         duplicateScheduledEvents.Add(scheduledEventText);
                         SendDuplicateInfoToFile(scheduledEventText);
@@ -88,14 +83,14 @@ namespace WMCDuplicateRemoverDriver
                 {
                     if (!ex.Message.Contains("There are no episodes found for this listing"))
                     {
-                        String logText = String.Format("Error processing {0}{1}Exception Message: {2}{1}Inner Exception: {3}{1}Stack Trace: {4}{1}", episode.ToString(), Environment.NewLine, ex.Message, ex.InnerException != null ? ex.InnerException.ToString() : "No Inner Exception", ex.StackTrace);
+                        string logText = $"Error processing {episode.ToString()}{Environment.NewLine}Exception Message: {ex.Message}{Environment.NewLine}Inner Exception: {(ex.InnerException != null ? ex.InnerException.ToString() : "No Inner Exception")}{Environment.NewLine}Stack Trace: {ex.StackTrace}{Environment.NewLine}";
                         AppendTextToFile(logText);
                     }
                 }
             }
         }
 
-        private void AppendTextToFile(String logText)
+        private void AppendTextToFile(string logText)
         {
             if (!File.Exists(logPath))
             {
@@ -109,15 +104,15 @@ namespace WMCDuplicateRemoverDriver
             }
         }
 
-        private void SendDuplicateInfoToFile(String scheduledEventText)
+        private void SendDuplicateInfoToFile(string scheduledEventText)
         {
-            String logText = String.Format("Cancelled: " + scheduledEventText);
+            string logText = $"Cancelled: {scheduledEventText}";
             AppendTextToFile(logText);
         }
 
         private static string FormatLogText(string textToLog)
         {
-            return String.Format("{0}: {1}{2}", DateTime.Now.ToString(), textToLog, Environment.NewLine);
+            return $"{DateTime.Now.ToString()}: {textToLog}{Environment.NewLine}";
         }
     }
 }

@@ -45,7 +45,7 @@ namespace WMCDuplicateRemover.Code.Wrappers
             fs.Close();
 
             var scheduledChannelIds = channelsScheduledForRecordings.Select(x => GetEpgChannelFromNumber(x));
-            Listings.Programs = Listings.Programs.Where(x => x.Start >= DateTime.Now && scheduledChannelIds.Contains(x.ChannelID)).ToList();
+            Listings.Programs = Listings.Programs.Where(x => x.Start >= DateTime.Now && scheduledChannelIds.Contains(x.ChannelId)).ToList();
         }
 
         internal override String GetEpgChannelFromNumber(int channelNumber)

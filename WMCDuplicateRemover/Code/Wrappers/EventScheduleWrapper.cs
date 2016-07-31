@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Microsoft.MediaCenter.TV.Scheduling;
+using System.Linq;
 
 namespace WMCDuplicateRemover
 {
@@ -9,22 +10,16 @@ namespace WMCDuplicateRemover
     {
         private ICollection<ScheduleEvent> _scheduledEvents;
 
-        public List<ScheduledEvent> GetEventsScheduledToRecord()
+        public IEnumerable<ScheduledEvent> GetEventsScheduledToRecord()
         {
             EventSchedule eventScheduler = new EventSchedule();
             _scheduledEvents = eventScheduler.GetScheduleEvents(DateTime.Now, DateTime.Now.AddDays(30), ScheduleEventStates.WillOccur);
             return ConvertEventsToWrapperType();
         }
 
-        private List<ScheduledEvent> ConvertEventsToWrapperType()
+        private IEnumerable<ScheduledEvent> ConvertEventsToWrapperType()
         {
-            List<ScheduledEvent> wrapperTypedScheduledEvents = new List<ScheduledEvent>();
-            foreach(var evnt in _scheduledEvents)
-            {
-                wrapperTypedScheduledEvents.Add(new ScheduledEventWrapper(evnt));
-            }
-
-            return wrapperTypedScheduledEvents;
+            return _scheduledEvents.Select(x => new ScheduledEventWrapper(x));
         }
     }
 }
