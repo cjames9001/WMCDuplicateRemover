@@ -6,7 +6,7 @@ namespace WMCDuplicateRemover.Code.EPG
     public class TVChannel
     {
         [XmlAttribute("id")]
-        public string ChannelID { get; set; }
+        public string ChannelId { get; set; }
 
         [XmlElement("display-name")]
         public List<string> ChannelInfo { get; set; }

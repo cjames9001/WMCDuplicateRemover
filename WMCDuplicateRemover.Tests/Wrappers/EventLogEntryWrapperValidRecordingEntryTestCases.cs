@@ -1,12 +1,11 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections;
 
 namespace WMCDuplicateRemover.Tests.Wrappers
 {
     public class EventLogEntryWrapperValidRecordingEntryTestCases : TestData
     {
-        private const String WMC_RECORDING_SOURCE = "Recording";
+        private const string WMC_RECORDING_SOURCE = "Recording";
         protected override IEnumerable CreateTestData()
         {
             yield return new TestCaseData(new EventLogEntryWrapper(
