@@ -55,17 +55,5 @@ namespace WMCDuplicateRemover.Tests
             //TODO: Make this a real test
             Assert.AreNotEqual("", new ScheduledEventWrapper().ToString());
         }
-
-        [TestCaseSource(typeof(ScheduledEventCancellationTests))]
-        public bool TestCanCancelScheduledEvent(ScheduledEvent scheduledEvent)
-        {
-            var metaDataWrapper = new MockMetaDataWrapper(scheduledEvent.Title, scheduledEvent.OriginalAirDate);
-            //TODO: Don't be lazy and put this here, it really muddies the intent...
-            metaDataWrapper.seriesIdCache = new Dictionary<string, string>() { { "the simpsons", "71663" }, { "forensic files", "71415" }, { "last week tonight", "278518" }, { "blahblahblah", "4568" } };
-
-            var mockEventLogWrapper = new Mock<EventLogWrapper>();
-            mockEventLogWrapper.Setup(x => x.FoundEventForRecording(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
-            return scheduledEvent.CanEventBeCancelled(mockEventLogWrapper.Object, metaDataWrapper);
-        }
     }
 }

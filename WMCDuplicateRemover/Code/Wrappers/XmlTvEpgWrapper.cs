@@ -15,7 +15,7 @@ namespace WMCDuplicateRemover.Code.Wrappers
             XmlReaderSettings settings = new XmlReaderSettings()
             {
                 XmlResolver = null,
-                ProhibitDtd = false
+                DtdProcessing = DtdProcessing.Ignore
             };
 
             using (XmlReader reader = XmlReader.Create(fs, settings))
@@ -34,7 +34,7 @@ namespace WMCDuplicateRemover.Code.Wrappers
             XmlReaderSettings settings = new XmlReaderSettings()
             {
                 XmlResolver = null,
-                ProhibitDtd = false
+                DtdProcessing = DtdProcessing.Ignore
             };
 
             using (XmlReader reader = XmlReader.Create(fs, settings))
