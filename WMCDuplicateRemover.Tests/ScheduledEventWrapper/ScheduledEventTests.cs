@@ -12,18 +12,6 @@ namespace WMCDuplicateRemover.Tests.ScheduledEventWrapper
     {
         ScheduledEvent _scheduledEvent;
 
-        [TestFixtureSetUp]
-        public void SetupFixture()
-        {
-            SetupHelper.SetupXMLData();
-        }
-
-        [TestFixtureTearDown]
-        public void TearDownFixture()
-        {
-            SetupHelper.TearDownXMLData();
-        }
-
         [Test]
         public void TestCreateScheduledEvent()
         {
@@ -48,15 +36,7 @@ namespace WMCDuplicateRemover.Tests.ScheduledEventWrapper
         [TestCaseSource(typeof(ScheduledEventTestsCanEventBeCancelledTests))]
         public void TestCanEventBeCancelled(ScheduledEventTestsCanEventBeCancelledTestDataUnit testData)
         {
-            /*
-            if (OriginalAirDate.Date == DateTime.MinValue.Date || OriginalAirDate.Date == DateTime.Now.Date)
-                return false;
-            if (OriginalAirDate < DateTime.Now)
-                return true;
-            return false;
-            
-             */
-            var episode = new Episode()
+            var episode = new Episode
             {
                 OriginalAirDateString = testData.ScheduledEvent.OriginalAirDate.ToString("yyyyMMddHHmmss")
             };
