@@ -24,7 +24,13 @@ namespace WMCDuplicateRemover.Tests
             _state = ScheduleEventStates.None;
         }
 
-        public MockScheduledEvent(string title, string description, bool partial, DateTime originalAirDate, bool repeat, DateTime startTime, ScheduleEventStates state) : this()
+        public MockScheduledEvent(string title,
+            string description,
+            bool partial,
+            DateTime originalAirDate,
+            bool repeat,
+            DateTime startTime,
+            ScheduleEventStates state) : this()
         {
             _title = title;
             _description = description;
@@ -35,18 +41,44 @@ namespace WMCDuplicateRemover.Tests
             _state = state;
         }
 
-        public MockScheduledEvent(string title, string description, bool partial, DateTime originalAirDate, bool repeat, DateTime startTime, DateTime endTime, int channel, ScheduleEventStates state)
-            : this()
+        public MockScheduledEvent(string title,
+            string description,
+            bool partial,
+            DateTime originalAirDate,
+            bool repeat,
+            DateTime startTime,
+            DateTime endTime,
+            int channel,
+            ScheduleEventStates state)
+            : this(title, description, partial, originalAirDate, repeat, startTime, state)
         {
-            _title = title;
-            _description = description;
-            _partial = partial;
-            _originalAirDate = originalAirDate;
-            _repeat = repeat;
-            _startTime = startTime;
             _endTime = endTime;
             _channelId = channel.ToString();
-            _state = state;
+        }
+
+        public MockScheduledEvent(string title,
+            string serviceId,
+            string description,
+            int keepUntil,
+            int quality,
+            bool partial,
+            string providerCopyright,
+            DateTime originalAirDate,
+            bool repeat,
+            string genre,
+            string fileName,
+            DateTime startTime,
+            DateTime endTime,
+            int channel,
+            ScheduleEventStates state) : 
+            this(title, description, partial, originalAirDate, repeat, startTime, endTime, channel, state)
+        {
+            _serviceId = serviceId;
+            _keepUntil = keepUntil;
+            _quality = quality;
+            _providerCopyright = providerCopyright;
+            _genre = genre;
+            _fileName = FileName;
         }
 
         private string _title;
@@ -56,13 +88,13 @@ namespace WMCDuplicateRemover.Tests
         }
 
         private string _serviceId;
-        public override string ServiceID
+        public override string ServiceId
         {
             get { return _serviceId; }
         }
 
         private string _channelId;
-        public override string ChannelID
+        public override string ChannelId
         {
             get { return _channelId; }
         }

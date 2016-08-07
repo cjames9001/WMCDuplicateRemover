@@ -21,7 +21,7 @@ namespace WMCDuplicateRemover.Tests.EPG
         [TestCaseSource(typeof(EPGIntegrationTestCases))]
         public bool TestCanCancelScheduledEvent(ScheduledEvent scheduledEvent)
         {
-            var episode = tv.GetEpisodeMetaDataBasedOnWMCMetaData(scheduledEvent.StartTime, scheduledEvent.EndTime, scheduledEvent.OriginalAirDate, Convert.ToInt32(scheduledEvent.ChannelID));
+            var episode = tv.GetEpisodeMetaDataBasedOnWMCMetaData(scheduledEvent.StartTime, scheduledEvent.EndTime, scheduledEvent.OriginalAirDate, Convert.ToInt32(scheduledEvent.ChannelId));
             return scheduledEvent.CanEventBeCancelled(new MicrosoftEventLogWrapper(), episode);
         }
     }
