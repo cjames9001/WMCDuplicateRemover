@@ -70,7 +70,6 @@
     <Compile Include="ScheduledEventWrapper\ScheduledEventCancellationIntegrationTests.cs" />
     <Compile Include="ScheduledEventWrapper\ScheduledEventTestsCanEventBeCancelledTests.cs" />
     <Compile Include="ScheduledEventWrapper\ScheduledEventTestScheduledEventToStringTests.cs" />
-    <Compile Include="SetupHelper.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="ScheduledEventWrapper\MockScheduledEvent.cs" />
     <Compile Include="ScheduledEventWrapper\ScheduledEventTests.cs" />
