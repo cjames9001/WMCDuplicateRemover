@@ -44,7 +44,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ehRecObj">
-      <HintPath>..\..\..\..\..\..\..\Windows\ehome\ehRecObj.dll</HintPath>
+      <HintPath>C:\Windows\ehome\ehRecObj.dll</HintPath>
     </Reference>
     <Reference Include="Moq, Version=4.5.13.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.5.13\lib\net45\Moq.dll</HintPath>

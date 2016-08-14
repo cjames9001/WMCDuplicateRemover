@@ -55,7 +55,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ehRecObj">
-      <HintPath>..\..\..\..\..\..\..\Windows\ehome\ehRecObj.dll</HintPath>
+      <HintPath>C:\Windows\ehome\ehRecObj.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
