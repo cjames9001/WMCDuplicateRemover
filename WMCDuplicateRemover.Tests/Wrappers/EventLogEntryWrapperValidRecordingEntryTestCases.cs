@@ -53,13 +53,13 @@ namespace WMCDuplicateRemover.Tests.Wrappers
 
             yield return new TestCaseData(new EventLogEntryWrapper("Recording of Parks and Recreation: The Pawnee-Eagleton Tip off Classic began as scheduled on 5/11/2015 10:57:34 AM while the program was already in progress.",
                 WMC_RECORDING_SOURCE, 2))
-                .Returns(true)
+                .Returns(false)
                 .SetDescription("Checks an event type 2 with episode name")
                 .SetName("Test2WithEpisode");
 
             yield return new TestCaseData(new EventLogEntryWrapper("Recording of Futurama: The Sting began as scheduled on 12/11/2013 3:37:58 AM while the program was already in progress.",
                 WMC_RECORDING_SOURCE, 2))
-                .Returns(true)
+                .Returns(false)
                 .SetDescription("Checks an event type 2 with episode name")
                 .SetName("Test2WithEpisode");
 
@@ -83,7 +83,7 @@ namespace WMCDuplicateRemover.Tests.Wrappers
 
             yield return new TestCaseData(new EventLogEntryWrapper("Recording of The Simpsons: Wild Barts Can't Be Broken began as scheduled on 4/13/2015 9:25:01 PM and was manually stopped on 4/13/2015 9:53:38 PM.",
                 WMC_RECORDING_SOURCE, 3))
-                .Returns(true)
+                .Returns(false)
                 .SetDescription("Checks an event type 3 with episode name")
                 .SetName("Test3WithEpisode");
 
@@ -95,7 +95,7 @@ namespace WMCDuplicateRemover.Tests.Wrappers
 
             yield return new TestCaseData(new EventLogEntryWrapper("Forensic Files: Sunday's Wake was manually deleted on 5/27/2015 6:20:41 PM by Corey.", 
                 WMC_RECORDING_SOURCE, 17))
-                .Returns(true)
+                .Returns(false)
                 .SetDescription("Checks an event type 17 with episode name")
                 .SetName("Test17WithEpisode");
 
