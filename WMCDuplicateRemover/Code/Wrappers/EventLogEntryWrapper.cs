@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -7,13 +6,13 @@ namespace WMCDuplicateRemover
 {
     public class EventLogEntryWrapper
     {
-        private const String WMC_RECORDING_SOURCE = "Recording";
+        private const string WMC_RECORDING_SOURCE = "Recording";
         private List<long> ValidInstanceIds = new List<long>() { 1, 2, 3, 17, 24 };
-        private String Message { get; set; }
+        private string Message { get; set; }
         public long InstanceId { get; private set; }
-        public String Source { get; private set; }
+        public string Source { get; private set; }
 
-        public String RecordingName
+        public string RecordingName
         {
             get
             {
@@ -21,7 +20,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        private String GetRecordingNameFromMessage()
+        private string GetRecordingNameFromMessage()
         {
             switch (InstanceId)
             {
@@ -38,7 +37,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        private String ParseRecordingNameWithExpressions(String prefixRegex, String suffixRegex)
+        private string ParseRecordingNameWithExpressions(string prefixRegex, string suffixRegex)
         {
             var recordingName = Message;
             var regex = Regex.Match(Message, prefixRegex);
@@ -65,7 +64,7 @@ namespace WMCDuplicateRemover
             }
         }
 
-        public EventLogEntryWrapper(String message, String source, long instanceId)
+        public EventLogEntryWrapper(string message, string source, long instanceId)
         {
             Message = message;
             InstanceId = instanceId;

@@ -12,7 +12,7 @@ namespace WMCDuplicateRemover.Tests.EPG
             yield return new TestCaseData(new DateTime(2015, 4, 29, 21, 0, 0), new DateTime(2015, 4, 29, 21, 30, 0), new DateTime(2002, 10, 03), 626)
                 .Returns(new Episode()
                     {
-                        ChannelID = "I626.219537223.microsoft.com",
+                        ChannelId = "I626.219537223.microsoft.com",
                         StartString = "20150429210000 -0500",
                         EndString = "20150429213000 -0500",
                         SeriesName = "Forensic Files",
@@ -26,7 +26,7 @@ namespace WMCDuplicateRemover.Tests.EPG
             yield return new TestCaseData(new DateTime(2015, 4, 29, 22, 0, 0), new DateTime(2015, 4, 29, 22, 31, 0), new DateTime(2015, 04, 29), 659)
                 .Returns(new Episode()
                 {
-                    ChannelID = "I659.204092670.microsoft.com",
+                    ChannelId = "I659.204092670.microsoft.com",
                     StartString = "20150429220000 -0500",
                     EndString = "20150429223100 -0500",
                     SeriesName = "The Daily Show With Jon Stewart",
@@ -40,7 +40,7 @@ namespace WMCDuplicateRemover.Tests.EPG
             yield return new TestCaseData(new DateTime(2015, 5, 1, 15, 0, 0), new DateTime(2015, 5, 1, 15, 30, 0), new DateTime(2005, 03, 21), 631)
                 .Returns(new Episode()
                 {
-                    ChannelID = "I631.182414698.microsoft.com",
+                    ChannelId = "I631.182414698.microsoft.com",
                     StartString = "20150501150000 -0500",
                     EndString = "20150501153000 -0500",
                     SeriesName = "Two and a Half Men",

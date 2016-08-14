@@ -45,13 +45,13 @@ namespace WMCDuplicateRemover.Code.Wrappers
             fs.Close();
 
             var scheduledChannelIds = channelsScheduledForRecordings.Select(x => GetEpgChannelFromNumber(x));
-            Listings.Programs = Listings.Programs.Where(x => x.Start >= DateTime.Now && scheduledChannelIds.Contains(x.ChannelID)).ToList();
+            Listings.Programs = Listings.Programs.Where(x => x.Start >= DateTime.Now && scheduledChannelIds.Contains(x.ChannelId)).ToList();
         }
 
-        internal override String GetEpgChannelFromNumber(int channelNumber)
+        internal override string GetEpgChannelFromNumber(int channelNumber)
         {
             var tvChannel = Listings.Channels.FirstOrDefault(x => x.ChannelInfo[1] == channelNumber.ToString());
-            return tvChannel == null ? "" : tvChannel.ChannelID;
+            return tvChannel == null ? "" : tvChannel.ChannelId;
         }
     }
 }

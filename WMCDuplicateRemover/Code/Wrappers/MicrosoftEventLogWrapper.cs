@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace WMCDuplicateRemover
 {
     public class MicrosoftEventLogWrapper : EventLogWrapper
     {
-        private HashSet<String> eventLogCache;
+        private HashSet<string> eventLogCache;
 
         public MicrosoftEventLogWrapper()
         {
-            eventLogCache = new HashSet<String>();
-            var eventLogEntries = new List<String>();
+            eventLogCache = new HashSet<string>();
+            var eventLogEntries = new List<string>();
 
             var eventLog = new EventLog("Media Center");
 
@@ -25,10 +24,10 @@ namespace WMCDuplicateRemover
             eventLogCache.UnionWith(eventLogEntries);
         }
 
-        public override bool FoundEventForRecording(String seriesName, String episodeName)
+        public override bool FoundEventForRecording(string seriesName, string episodeName)
         {
             //Can't be cancelling shows we only have part of the information needed!
-            if (String.IsNullOrEmpty(seriesName) || String.IsNullOrEmpty(episodeName))
+            if (string.IsNullOrEmpty(seriesName) || string.IsNullOrEmpty(episodeName))
                 return false;
 
             //These are exceptions since I had to go and delete off these because WMC screwed up its DRM and I wasn't actually
@@ -37,14 +36,14 @@ namespace WMCDuplicateRemover
             //if (seriesName.ToLower() == "True Detective".ToLower() || seriesName.ToLower() == "Silicon Valley".ToLower())
             //    return false;
 
-            var formattedEventData = CleanRecordingName(String.Format("{0}: {1}", seriesName, episodeName));
+            var formattedEventData = CleanRecordingName($"{seriesName}: {episodeName}");
 
             return eventLogCache.Contains(formattedEventData);
         }
 
-        private String CleanRecordingName(String recordingName)
+        private string CleanRecordingName(string recordingName)
         {
-            return recordingName.Replace("'", String.Empty).Trim().ToLower();
+            return recordingName.Replace("'", string.Empty).Trim().ToLower();
         }
     }
 }

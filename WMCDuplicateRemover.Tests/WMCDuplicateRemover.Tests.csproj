@@ -67,13 +67,11 @@
     <Compile Include="EPG\TVChannelTestCases.cs" />
     <Compile Include="EPG\TVChannelTests.cs" />
     <Compile Include="EPG\TVEpisodeTestCases.cs" />
-    <Compile Include="EventScheduleTests.cs" />
     <Compile Include="ScheduledEventWrapper\ScheduledEventCancellationIntegrationTests.cs" />
+    <Compile Include="ScheduledEventWrapper\ScheduledEventTestsCanEventBeCancelledTests.cs" />
     <Compile Include="ScheduledEventWrapper\ScheduledEventTestScheduledEventToStringTests.cs" />
-    <Compile Include="SetupHelper.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="ScheduledEventWrapper\MockScheduledEvent.cs" />
-    <Compile Include="ScheduledEventWrapper\ScheduledEventCancellationTests.cs" />
     <Compile Include="ScheduledEventWrapper\ScheduledEventTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wrappers\EventLogEntryWrapperValidRecordingEntryTestCases.cs" />
