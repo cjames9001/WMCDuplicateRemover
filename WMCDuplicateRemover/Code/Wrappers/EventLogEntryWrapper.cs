@@ -7,7 +7,23 @@ namespace WMCDuplicateRemover
     public class EventLogEntryWrapper
     {
         private const string WMC_RECORDING_SOURCE = "Recording";
-        private List<long> ValidInstanceIds = new List<long>() { 1, 2, 3, 17, 24 };
+
+        enum RecordingInstanceType
+        {
+            CompletedSuccessfuly = 1,
+            BeganWhileInProgress = 2,
+            HadSignalLoss = 3,
+            PartialRecordingDueToPowerLossOrTemporaryFailure = 4,
+            NotRecordedDueToConflict = 6,
+            NotRecordedDueToSystemMalfunctionOrPowerLoss = 7,
+            TunerNotWorkingOrInstalled = 8,
+            ManuallyDeleted = 17,
+            ScheduledRecordingRemoved = 21,
+            Cancelled = 24,
+        }
+        
+        //TODO: Make the valid instances configurable, that way the control is left to the user as to which circumstances should count as a success.
+        private List<long> ValidInstanceIds = new List<long>() { (long)RecordingInstanceType.CompletedSuccessfuly, (long)RecordingInstanceType.Cancelled };
         private string Message { get; set; }
         public long InstanceId { get; private set; }
         public string Source { get; private set; }

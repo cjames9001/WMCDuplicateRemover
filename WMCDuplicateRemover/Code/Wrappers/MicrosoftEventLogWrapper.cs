@@ -10,7 +10,6 @@ namespace WMCDuplicateRemover
         public MicrosoftEventLogWrapper()
         {
             eventLogCache = new HashSet<string>();
-            var eventLogEntries = new List<string>();
 
             var eventLog = new EventLog("Media Center");
 
@@ -20,8 +19,6 @@ namespace WMCDuplicateRemover
                 if (entryWrapper.IsValidRecordingEntry)
                     eventLogCache.Add(CleanRecordingName(entryWrapper.RecordingName));
             }
-
-            eventLogCache.UnionWith(eventLogEntries);
         }
 
         public override bool FoundEventForRecording(string seriesName, string episodeName)
