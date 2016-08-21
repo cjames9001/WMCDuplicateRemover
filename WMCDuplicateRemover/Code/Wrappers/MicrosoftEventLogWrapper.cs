@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using WMCDuplicateRemover.Code.Serialization;
 
 namespace WMCDuplicateRemover
 {
     public class MicrosoftEventLogWrapper : EventLogWrapper
     {
         private HashSet<string> eventLogCache;
+        private static string programDataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\WMCDuplicateRemover";
+        private readonly string eventLogEntryCacheFilePath = Path.Combine(programDataFolder, "eventLogEntries.cache");
 
         public MicrosoftEventLogWrapper()
         {
@@ -19,6 +24,23 @@ namespace WMCDuplicateRemover
                 if (entryWrapper.IsValidRecordingEntry)
                     eventLogCache.Add(CleanRecordingName(entryWrapper.RecordingName));
             }
+
+            var existingEventLogCahceEntries = GetExistingEventLogCache();
+            eventLogCache.UnionWith(existingEventLogCahceEntries);
+            CreateFileCache(eventLogCache);
+        }
+
+        private HashSet<string> GetExistingEventLogCache()
+        {
+            var objectDeserializer = new ObjectDeserializer();
+            var previouslyCachedEventLogEntries = objectDeserializer.ReadFromBinaryFile<HashSet<string>>(eventLogEntryCacheFilePath);
+            return previouslyCachedEventLogEntries;
+        }
+
+        private void CreateFileCache(HashSet<string> eventLogCache)
+        {
+            var objectSerializer = new ObjectSerializer();
+            objectSerializer.WriteToBinaryFile(eventLogEntryCacheFilePath, eventLogCache);
         }
 
         public override bool FoundEventForRecording(string seriesName, string episodeName)

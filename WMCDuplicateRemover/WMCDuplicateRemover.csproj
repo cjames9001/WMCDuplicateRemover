@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\EPG\Episode.cs" />
+    <Compile Include="Code\Serialization\ObjectDeserializer.cs" />
+    <Compile Include="Code\Serialization\ObjectSerializer.cs" />
     <Compile Include="Code\Wrappers\DateTimeWrapper.cs" />
     <Compile Include="Code\Wrappers\EpgWrapper.cs" />
     <Compile Include="Code\Wrappers\IDateTime.cs" />
