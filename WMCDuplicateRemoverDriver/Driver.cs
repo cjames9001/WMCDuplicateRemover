@@ -11,8 +11,7 @@ namespace WMCDuplicateRemoverDriver
 {
     public class Driver
     {
-        private static string programDataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\WMCDuplicateRemover";
-        private readonly string logPath = Path.Combine(programDataFolder, "WMCDuplicateRemover.log");
+        private readonly string logPath = Path.Combine(StaticValues.WMCDuplicateRemoverApplicationDataFolder, "WMCDuplicateRemover.log");
 
         public void Run()
         {
@@ -26,7 +25,7 @@ namespace WMCDuplicateRemoverDriver
             AppendTextToFile("Updating EPG");
             UpdateEPG();
             var channelsWithScheduledEvents = scheduledEvents.Select(x => int.Parse(x.ChannelId)).Distinct();
-            var epgWrapper = new XmlTvEpgWrapper(Path.Combine(programDataFolder, "xmltv.xml"), channelsWithScheduledEvents);
+            var epgWrapper = new XmlTvEpgWrapper(Path.Combine(StaticValues.WMCDuplicateRemoverApplicationDataFolder, "xmltv.xml"), channelsWithScheduledEvents);
             AppendTextToFile($"EPG Updated After {stopwatch.Elapsed}");
             ProcessDuplicates(scheduledEvents, duplicateScheduledEvents, epgWrapper);
             stopwatch.Stop();
@@ -46,7 +45,7 @@ namespace WMCDuplicateRemoverDriver
             };
 
             var cwd = Directory.GetCurrentDirectory();
-            Directory.SetCurrentDirectory(programDataFolder);
+            Directory.SetCurrentDirectory(StaticValues.WMCDuplicateRemoverApplicationDataFolder);
 
             using (var process = Process.Start(epgDownloadProcess.StartInfo))
             {
