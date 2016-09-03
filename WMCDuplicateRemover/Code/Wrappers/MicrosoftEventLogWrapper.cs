@@ -9,8 +9,7 @@ namespace WMCDuplicateRemover
     public class MicrosoftEventLogWrapper : EventLogWrapper
     {
         private HashSet<string> eventLogCache;
-        private static string programDataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\WMCDuplicateRemover";
-        private readonly string eventLogEntryCacheFilePath = Path.Combine(programDataFolder, "eventLogEntries.cache");
+        private readonly string eventLogEntryCacheFilePath = Path.Combine(StaticValues.WMCDuplicateRemoverApplicationDataFolder, "eventLogEntries.cache");
 
         public MicrosoftEventLogWrapper()
         {

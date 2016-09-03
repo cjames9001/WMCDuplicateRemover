@@ -74,6 +74,7 @@
     <Compile Include="Code\Wrappers\ScheduledEvent.cs" />
     <Compile Include="Code\Wrappers\ScheduledEventWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticValues.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
