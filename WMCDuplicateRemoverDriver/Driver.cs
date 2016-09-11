@@ -11,7 +11,7 @@ namespace WMCDuplicateRemoverDriver
 {
     public class Driver
     {
-        private readonly string logPath = Path.Combine(StaticValues.WMCDuplicateRemoverApplicationDataFolder, "WMCDuplicateRemover.log");
+        private readonly string logPath = Path.Combine(StaticValues.WMCDuplicateRemoverApplicationDataFolder, $"{DateTime.Now.Year}.{DateTime.Now.Month}.WMCDuplicateRemover.log");
 
         public void Run()
         {
