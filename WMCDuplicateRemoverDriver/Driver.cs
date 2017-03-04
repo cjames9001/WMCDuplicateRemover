@@ -15,21 +15,30 @@ namespace WMCDuplicateRemoverDriver
 
         public void Run()
         {
-            AppendTextToFile("Begin Processing");
-            var eventScheduler = new EventScheduleWrapper();
-            var scheduledEvents = eventScheduler.GetEventsScheduledToRecord().ToList();
-            scheduledEvents.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
-            List<string> duplicateScheduledEvents = new List<string>();
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            AppendTextToFile("Updating EPG");
-            UpdateEPG();
-            var channelsWithScheduledEvents = scheduledEvents.Select(x => int.Parse(x.ChannelId)).Distinct();
-            var epgWrapper = new XmlTvEpgWrapper(Path.Combine(StaticValues.WMCDuplicateRemoverApplicationDataFolder, "xmltv.xml"), channelsWithScheduledEvents);
-            AppendTextToFile($"EPG Updated After {stopwatch.Elapsed}");
-            ProcessDuplicates(scheduledEvents, duplicateScheduledEvents, epgWrapper);
-            stopwatch.Stop();
-            AppendTextToFile($"Finished Processing: {duplicateScheduledEvents.Count}/{scheduledEvents.Count} Cancelled in {stopwatch.Elapsed}\n");
+            try
+            {
+                AppendTextToFile("Begin Processing");
+                var eventScheduler = new EventScheduleWrapper();
+                var scheduledEvents = eventScheduler.GetEventsScheduledToRecord().ToList();
+                scheduledEvents.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
+                List<string> duplicateScheduledEvents = new List<string>();
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+                AppendTextToFile("Updating EPG");
+                UpdateEPG();
+                var channelsWithScheduledEvents = scheduledEvents.Select(x => int.Parse(x.ChannelId)).Distinct();
+                var epgWrapper = new XmlTvEpgWrapper(Path.Combine(StaticValues.WMCDuplicateRemoverApplicationDataFolder, "xmltv.xml"), channelsWithScheduledEvents);
+                AppendTextToFile($"EPG Updated After {stopwatch.Elapsed}");
+                ProcessDuplicates(scheduledEvents, duplicateScheduledEvents, epgWrapper);
+                stopwatch.Stop();
+                AppendTextToFile($"Finished Processing: {duplicateScheduledEvents.Count}/{scheduledEvents.Count} Cancelled in {stopwatch.Elapsed}\n");
+            }
+            catch(Exception ex)
+            {
+                AppendTextToFile($"There was an error in the run method: {ex.GetType()}\nMessage: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                if (ex.InnerException != null)
+                    AppendTextToFile($"Inner Exception{ex.InnerException.GetType()}\nMessage: {ex.InnerException.Message}\nStackTrace: {ex.InnerException.StackTrace}");
+            }
         }
 
         private void UpdateEPG()

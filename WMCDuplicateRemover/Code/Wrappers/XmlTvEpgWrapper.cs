@@ -28,7 +28,7 @@ namespace WMCDuplicateRemover.Code.Wrappers
             Listings.Programs = Listings.Programs.Where(x => x.Start >= currentDateTime.Now()).ToList();
         }
 
-        public XmlTvEpgWrapper(String EPGPath, IEnumerable<int> channelsScheduledForRecordings)
+        public XmlTvEpgWrapper(string EPGPath, IEnumerable<int> channelsScheduledForRecordings)
         {
             var fs = new FileStream(EPGPath, FileMode.Open);
             XmlReaderSettings settings = new XmlReaderSettings()
