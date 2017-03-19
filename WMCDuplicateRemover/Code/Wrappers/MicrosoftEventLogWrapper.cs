@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using WMCDuplicateRemover.Code.Serialization;
+using UserSettings = WMCDuplicateRemover.Properties.Settings;
 
 namespace WMCDuplicateRemover
 {
@@ -45,14 +46,12 @@ namespace WMCDuplicateRemover
         public override bool FoundEventForRecording(string seriesName, string episodeName)
         {
             //Can't be cancelling shows we only have part of the information needed!
-            if (string.IsNullOrEmpty(seriesName) || string.IsNullOrEmpty(episodeName))
+            if (string.IsNullOrWhiteSpace(seriesName) || string.IsNullOrWhiteSpace(episodeName))
                 return false;
 
-            //These are exceptions since I had to go and delete off these because WMC screwed up its DRM and I wasn't actually
-            //finished watching these
-            //TODO: Add the ability to add exceptions to this program without hard coding here
-            //if (seriesName.ToLower() == "True Detective".ToLower() || seriesName.ToLower() == "Silicon Valley".ToLower())
-            //    return false;
+            var exlusions = UserSettings.Default.Exclusions.Cast<string>().Select(x => x.ToLower());
+            if (exlusions.Contains(seriesName.ToLower()))
+                return false;
 
             var formattedEventData = CleanRecordingName($"{seriesName}: {episodeName}");
 
