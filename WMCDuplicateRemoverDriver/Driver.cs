@@ -11,7 +11,13 @@ namespace WMCDuplicateRemoverDriver
 {
     public class Driver
     {
-        private readonly string logPath = Path.Combine(StaticValues.WMCDuplicateRemoverApplicationDataFolder, $"{DateTime.Now.Year}.{DateTime.Now.Month}.WMCDuplicateRemover.log");
+        readonly string logPath = Path.Combine(StaticValues.WMCDuplicateRemoverApplicationDataFolder, $"{DateTime.Now.Year}.{DateTime.Now.Month}.WMCDuplicateRemover.log");
+        readonly bool _dryRun;
+
+        public Driver(bool dryRun = false)
+        {
+            _dryRun = dryRun;
+        }
 
         public void Run()
         {
@@ -80,18 +86,22 @@ namespace WMCDuplicateRemoverDriver
                     episode = epgWrapper.GetEpisodeMetaDataBasedOnWMCMetaData(scheduledEvent.StartTime, scheduledEvent.EndTime, scheduledEvent.OriginalAirDate, Convert.ToInt32(scheduledEvent.ChannelId));
                     if (scheduledEvent.CanEventBeCancelled(eventLogWrapper, episode))
                     {
-                        var scheduledEventText = $"{episode.ToString()}State: {scheduledEvent.State}{Environment.NewLine}Partial: {scheduledEvent.Partial.ToString()}{Environment.NewLine}Repeat: {scheduledEvent.Repeat.ToString()}{Environment.NewLine}";
+                        var scheduledEventText = $"{episode}State: {scheduledEvent.State}{Environment.NewLine}Partial: {scheduledEvent.Partial.ToString()}{Environment.NewLine}Repeat: {scheduledEvent.Repeat.ToString()}{Environment.NewLine}";
 
                         duplicateScheduledEvents.Add(scheduledEventText);
                         SendDuplicateInfoToFile(scheduledEventText);
-                        scheduledEvent.CancelEvent();
+
+                        if (!_dryRun)
+                        {
+                            scheduledEvent.CancelEvent();
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
                     if (!ex.Message.Contains("There are no episodes found for this listing"))
                     {
-                        string logText = $"Error processing {episode.ToString()}{Environment.NewLine}Exception Message: {ex.Message}{Environment.NewLine}Inner Exception: {(ex.InnerException != null ? ex.InnerException.ToString() : "No Inner Exception")}{Environment.NewLine}Stack Trace: {ex.StackTrace}{Environment.NewLine}";
+                        string logText = $"Error processing {episode}{Environment.NewLine}Exception Message: {ex.Message}{Environment.NewLine}Inner Exception: {(ex.InnerException != null ? ex.InnerException.ToString() : "No Inner Exception")}{Environment.NewLine}Stack Trace: {ex.StackTrace}{Environment.NewLine}";
                         AppendTextToFile(logText);
                     }
                 }
