@@ -41,7 +41,7 @@ namespace WMCDuplicateRemover.Tests.ScheduledEventWrapper
                 OriginalAirDateString = testData.ScheduledEvent.OriginalAirDate.ToString("yyyyMMddHHmmss")
             };
             var eventLogWrapper = new Mock<EventLogWrapper>();
-            eventLogWrapper.Setup(x => x.FoundEventForRecording(It.IsAny<string>(), It.IsAny<string>())).Returns(testData.EventLogFoundEventForRecordingResponse);
+            eventLogWrapper.Setup(x => x.FoundEventForRecording(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(testData.EventLogFoundEventForRecordingResponse);
             Assert.AreEqual(testData.ExpectedResult, testData.ScheduledEvent.CanEventBeCancelled(eventLogWrapper.Object, episode));
         }
 

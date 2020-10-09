@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace WMCDuplicateRemover.Code.EPG
@@ -50,6 +51,48 @@ namespace WMCDuplicateRemover.Code.EPG
             }
         }
 
+        [XmlElement("episode-num")]
+        public EpisodeNumber[] EpisodeParts { get; set; }
+
+        public class EpisodeNumber
+        {
+            [XmlAttribute("system")]
+            public string Name { get; set; }
+
+            [XmlText]
+            public string Value { get; set; }
+        }
+
+        public string EpisodePart
+        {
+            get
+            {
+                try
+                {
+                    var episodePartAttribute = "xmltv_ns";
+                    if (EpisodeParts == null || !EpisodeParts.Any(x => x.Name == episodePartAttribute))
+                    {
+                        return string.Empty;
+                    }
+
+                    var episodePart = EpisodeParts.FirstOrDefault(x => x.Name == episodePartAttribute)?.Value;
+                    if (string.IsNullOrWhiteSpace(episodePart) || !episodePart.Contains("/"))
+                    {
+                        return string.Empty;
+                    }
+
+                    episodePart = episodePart.Replace("..", string.Empty);
+                    var numeratorOverDenominator = episodePart.Split('/');
+                    return $"{int.Parse(numeratorOverDenominator[0]) + 1}/{numeratorOverDenominator[1]}";
+
+                }
+                catch(Exception)
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
         private DateTime GetDateFromDateString(string timeString)
         {
             try
@@ -84,7 +127,7 @@ namespace WMCDuplicateRemover.Code.EPG
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
-            foreach (var propertyInfo in GetType().GetProperties())
+            foreach (var propertyInfo in GetType().GetProperties().Where(x => x.Name != nameof(EpisodeParts)))
             {
                 if (propertyInfo.CanRead)
                 {
@@ -108,7 +151,7 @@ namespace WMCDuplicateRemover.Code.EPG
         {
             try
             {
-                return $"{SeriesName}: {EpisodeName}{Environment.NewLine}Scheduled For: {Start}{Environment.NewLine}Description: {Description}{Environment.NewLine}ChannelID: {ChannelId}{Environment.NewLine}Original Air Date: {OriginalAirDate}{Environment.NewLine}{GetType().Namespace}.{GetType().Name}{Environment.NewLine}";
+                return $"{SeriesName}: {EpisodeName}{(string.IsNullOrWhiteSpace(EpisodePart) ? "": $" {EpisodePart}")}{Environment.NewLine}Scheduled For: {Start}{Environment.NewLine}Description: {Description}{Environment.NewLine}ChannelID: {ChannelId}{Environment.NewLine}Original Air Date: {OriginalAirDate}{Environment.NewLine}{GetType().Namespace}.{GetType().Name}{Environment.NewLine}";
             }
             catch (Exception ex)
             {

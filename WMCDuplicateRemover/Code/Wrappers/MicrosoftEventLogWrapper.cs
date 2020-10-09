@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using WMCDuplicateRemover.Code.Serialization;
 
 namespace WMCDuplicateRemover
@@ -10,6 +10,7 @@ namespace WMCDuplicateRemover
     {
         private HashSet<string> eventLogCache;
         private readonly string eventLogEntryCacheFilePath = Path.Combine(StaticValues.WMCDuplicateRemoverApplicationDataFolder, "eventLogEntries.cache");
+        private readonly string eventLogEntryCacheDebugFilePath = Path.Combine(StaticValues.WMCDuplicateRemoverApplicationDataFolder, "eventLogEntriesDebug.txt");
 
         public MicrosoftEventLogWrapper()
         {
@@ -40,12 +41,14 @@ namespace WMCDuplicateRemover
         {
             var objectSerializer = new ObjectSerializer();
             objectSerializer.WriteToBinaryFile(eventLogEntryCacheFilePath, eventLogCache);
+            
+            File.WriteAllLines(eventLogEntryCacheDebugFilePath, eventLogCache.ToArray());
         }
 
-        public override bool FoundEventForRecording(string seriesName, string episodeName)
+        public override bool FoundEventForRecording(string seriesName, string episodeName, string episodePart)
         {
             //Can't be cancelling shows we only have part of the information needed!
-            if (string.IsNullOrEmpty(seriesName) || string.IsNullOrEmpty(episodeName))
+            if (string.IsNullOrWhiteSpace(seriesName) || string.IsNullOrWhiteSpace(episodeName))
                 return false;
 
             //These are exceptions since I had to go and delete off these because WMC screwed up its DRM and I wasn't actually
@@ -54,7 +57,9 @@ namespace WMCDuplicateRemover
             //if (seriesName.ToLower() == "True Detective".ToLower() || seriesName.ToLower() == "Silicon Valley".ToLower())
             //    return false;
 
-            var formattedEventData = CleanRecordingName($"{seriesName}: {episodeName}");
+            var formattedEventData = string.IsNullOrWhiteSpace(episodePart) ? 
+                CleanRecordingName($"{seriesName}: {episodeName}") : 
+                CleanRecordingName($"{seriesName}: {episodeName} ({episodePart})");
 
             return eventLogCache.Contains(formattedEventData);
         }

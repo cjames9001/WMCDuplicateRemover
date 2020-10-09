@@ -23,6 +23,36 @@ namespace WMCDuplicateRemover.Tests.EPG
                 .SetDescription("Checks 9PM Showing of forensic files")
                 .SetName("TestGetForensicFilesEpisode");
 
+            yield return new TestCaseData(new DateTime(2015, 5, 5, 18, 0, 0), new DateTime(2015, 5, 5, 19, 0, 0), new DateTime(2014, 5, 07), 7)
+                .Returns(new Episode()
+                {
+                    ChannelId = "I7.28455196.microsoft.com",
+                    StartString = "20150505180000 -0500",
+                    EndString = "20150505190000 -0500",
+                    SeriesName = "Criminal Minds",
+                    EpisodeName = "Angels",
+                    Description = "When prostitutes are murdered in Texas, their deaths seem to have religious overtones; members of the team are put at risk throughout the course of the investigation.",
+                    OriginalAirDateString = "20140507",
+                    EpisodeParts = new[] { new Episode.EpisodeNumber { Name = "xmltv_ns", Value = "..0/2" } }
+                })
+                .SetDescription("Checks 7PM Showing of criminal minds part 1")
+                .SetName("TestGetCriminalMindsPart1Episode");
+
+            yield return new TestCaseData(new DateTime(2015, 5, 5, 19, 0, 0), new DateTime(2015, 5, 5, 20, 0, 0), new DateTime(2014, 5, 14), 7)
+                .Returns(new Episode()
+                {
+                    ChannelId = "I7.28455196.microsoft.com",
+                    StartString = "20150505190000 -0500",
+                    EndString = "20150505200000 -0500",
+                    SeriesName = "Criminal Minds",
+                    EpisodeName = "Demons",
+                    Description = "The investigation in Texas reveals a deep web of corruption; Garcia must save a friend.",
+                    OriginalAirDateString = "20140514",
+                    EpisodeParts = new[] { new Episode.EpisodeNumber { Name = "xmltv_ns", Value = "..1/2" } }
+                })
+                .SetDescription("Checks 7PM Showing of criminal minds part 2")
+                .SetName("TestGetCriminalMindsPart2Episode");
+
             yield return new TestCaseData(new DateTime(2015, 4, 29, 22, 0, 0), new DateTime(2015, 4, 29, 22, 31, 0), new DateTime(2015, 04, 29), 659)
                 .Returns(new Episode()
                 {

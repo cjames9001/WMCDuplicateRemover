@@ -35,7 +35,7 @@ namespace WMCDuplicateRemover
 
         private bool EventLogInformationAllowsForCancellation(EventLogWrapper entryWrapper, Episode episode)
         {
-            return entryWrapper.FoundEventForRecording(episode.SeriesName, episode.EpisodeName);
+            return entryWrapper.FoundEventForRecording(episode.SeriesName, episode.EpisodeName, episode.EpisodePart);
         }
 
         public override string ToString()
